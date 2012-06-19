@@ -1,0 +1,30 @@
+=========
+ Install
+=========
+
+Virtual env::
+
+  /usr/local/python/2.7/bin/virtualenv --no-site-packages --distribute .
+  source bin/activate
+
+Software requirements::
+
+  pip install -r requirements.txt 
+
+Create new Django Project and App::
+
+  bin/django-admin.py startproject rostrum
+  bin/django-admin.py startapp app
+
+  cd rostrum
+
+Fix Perms::
+
+  chmod a+x manage.py
+
+Run empty app::
+
+  ./manage.py runserver
+
+
+
