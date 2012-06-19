@@ -1,0 +1,105 @@
+========================
+ Categorized Attributes
+========================
+
+Pulled from ROSA STRAW Crosswalk exported as CSV.
+
+We probably will need to parse this programmatically as it's unlikely
+to be fixed in stone.
+
+Administrative
+==============
+
+Application Type
+Branch Manager Name
+Contract Task Order Numbers
+Contractor/ Civil Servant Managed Records
+Developer-Alternate
+Developer-Primary
+HITSS Supported
+IT&CD Security Owner Name
+NASA Analyst Name
+NASA Owner Name
+NASA Owner Org Code
+NASA Owner Organization Name
+NASA Requestor
+Number of Users
+OTS Supplier Contact Information
+OTS Supplier Org Name
+Project Manager Name
+Service Request Class(s)
+Service Request Numbers
+Support Class
+Tier Transfer Level
+
+Compliance
+==========
+
+508 Compliance Review Date
+Application Data Impact Type
+AWRS Check List on File
+Compliance - 2810
+Compliance - 508
+Compliance - AWRS
+Federal Records Qualification
+Filed with Federal Registry
+Information Sensitivity
+NRR Item
+NRR Schedule
+NRRS Disposition
+NRRS Schedule/ Item
+Privacy Act System
+Privacy Info Data Types
+Privacy Info Indicator
+Security Plan Number
+Security Scan Date
+Server FIPS Information Category
+SORN - System of Records Notice Number
+SSN System
+
+Descriptive
+===========
+
+Acronym
+Description
+Frequency Used
+Functional Types
+Name
+Release Notes
+Software Class
+User Groups
+Version Change Description
+Version Number
+
+Technical
+=========
+
+Authentication Type
+Confirmed Compatible Web Browser Versions
+DBMS Name and Version
+DBMS Name and Version - Other 
+Disposition Comments
+Firewall w/2 Factor Token Authentication
+Hosting Technology
+Interface Acronym
+Interface Acronym Direction Method
+Interface Direction
+Interface Method
+Internal or External System
+IP Address
+Network Services Used
+Production Application Server
+Production Database Server
+Production Report Server
+Release Date
+SEF Application Server
+SEF Database Server
+SEF Report Server
+Servers  Application
+Servers - Database
+Servers - Report
+Servers Location
+Software Names and Versions
+Software Names and Versions - Other
+URL Link
+Version Status
