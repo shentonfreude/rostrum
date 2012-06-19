@@ -1,8 +1,8 @@
 =========
- ROSTRAW
+ ROSTRUM
 =========
 
-Visualize data extracted from ROSA and updated.
+Visualize data extracted from ROSA/STRAW and updated in spreadsheets.
 
 Only current version information is included.
 
