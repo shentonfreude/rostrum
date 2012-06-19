@@ -14,6 +14,8 @@ Software requirements::
 Create new Django Project and App::
 
   bin/django-admin.py startproject rostrum
+
+  cd rostrum
   bin/django-admin.py startapp app
 
   cd rostrum

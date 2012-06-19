@@ -1,0 +1,84 @@
+=================
+ Attribute Names
+=================
+
+From CSV Export. 
+
+We'll have to turn these into repeatable SQL column names, and making
+them pythonic names will aid access.  So we'll have to transform like from:
+
+  Service Request Class(s) - Previous
+
+to:
+
+  service_request_classs_previous
+
+Names from CSV
+==============
+
+No.
+Acronym
+Acronym - Previous
+Version Number
+Version Number - Previous
+Name
+Name - Previous
+Description
+Description - Previous
+Support Class
+Support Class - Previous
+Application Type
+Application Type - Previous
+Software Class
+Software Class - Previous
+User Groups
+User Groups - Previous
+Number of Users
+Number of Users - Previous
+Version Status
+Version Status - Previous
+Version Change Description
+Version Change Description - Previous
+Service Request Numbers
+Service Request Numbers - Previous
+Service Request Class(s)
+Service Request Class(s) - Previous
+HITSS Supported
+HITSS Supported - Previous
+Project Manager Name
+Project Manager Name - Previous
+Data Impact Type
+Data Impact Type - Previous
+FIPS Information Category
+FIPS Information Category - Previous
+Compliance - 508
+Compliance - 508 - Previous
+Internal or External System
+Internal or External System - Previous
+Security Plan Number
+Security Plan Number - Previous
+URL Link
+URL Link - Previous
+Architecture Type
+Architecture Type - Previous
+DBMS Names and Version
+DBMS Names and Version - Previous
+Software Names and Versions
+Software Names and Versions - Previous
+Servers - Application
+Servers - Application - Previous
+Servers - Database
+Servers - Database - Previous
+Servers - Report
+Servers - Report - Previous
+Servers Location
+Servers Location - Previous
+Network Services Used
+Network Services Used - Previous
+Interface Acronym
+Interface Acronym - Previous
+Interface Direction
+Interface Direction - Previous
+Interface Method
+Interface Method - Previous
+Comments
