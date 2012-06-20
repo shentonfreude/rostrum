@@ -4,202 +4,84 @@
 
 {% block leftnav %}
 <li class="nav-header">Quick jump...</li>
-<li><a href="#overview">Overview</a></li>
-<li><a href="#vitals">Vitals</a></li>
-<li><a href="#details">Details</a></li>
-<li><a href="#personnel">Personnel</a></li>
-<li><a href="#systems">Systems</a></li>
-<li><a href="#interfaces">Interfaces</a></li>
-<li><a href="#security">Security</a></li>
-<li><a href="#certification">Certification</a></li>
-<li><a href="#process">Process</a></li>
-<li><a href="#tbd">TBD</a></li>
+<li><a href="#comments">Comments</a></li>
+<li><a href="#administrative">Administrative</a></li>
+<li><a href="#compliance">Compliance</a></li>
+<li><a href="#descriptive">Descriptive</a></li>
+<li><a href="#technical">Technical</a></li>
 {% endblock %}
 
 {% block content %}
-<h1>Details: {{app.acronym}} {{app.release|default:"[No#]"}}</h1>
-
-<div class="row-fluid well">
-  <div class="span8">
-    <h2 id="allreleases">All Releases</h2>
-    {% for release in releases %}
-    {% if release.release == app.release %}
-    <span class="{{release.app_class}}"
-       href="{% url app_details object_id=release.id %}">{{release.release|default:"[No#]"}}</span>
-    {% else %}
-    <a class="{{release.app_class}}"
-       href="{% url app_details object_id=release.id %}">{{release.release|default:"[No#]"}}</a>
-    {% endif %}
-    {% endfor %}
-  </div>
-  <div class="span4">
-    <h2 id="releasecolors">Release Colors</h2>
-      <span class="{{bootstrap_label.Archived}}">Archived</span>
-      <span class="{{bootstrap_label.Cancelled}}">Cancelled</span>
-      <span class="{{bootstrap_label.Current_Version}}">Current Version</span>
-      <span class="{{bootstrap_label.In_Development}}">In Development</span>
-      <span class="{{bootstrap_label.In_Suspense}}">In Suspense</span>
-      <span class="{{bootstrap_label.Unassigned}}">Unassigned</span>
-  </div>
-</div>
+<h1>Details: {{app.acronym}} {{app.version_number|default:"[No#]"}}</h1>
 
 
 <div class="row-fluid well">
-  <div class="span8">
-    <h2 id=="descriptive">Descriptive</h2>
-    <dl>
-      <dt>Acronum                        </dt><dd>{{app.acronym                    }}</dd>
-      <dt>Description                        </dt><dd>{{app.description                    }}</dd>
-      <dt>Frequency Used ?                 </dt><dd>{{app.FREQUENCY_USED_name                    }}</dd>
-      <dt>Functional Types                        </dt><dd>{{app.application_type                    }}</dd>
-      <dt>Name                        </dt><dd>{{app.name                    }}</dd>
-      <dt>Release Notes ?              </dt><dd>{{app.RELEASE_NOTES               }}</dd>
-      <dt>User Groups                 </dt><dd>{{app.user_groups                 }}</dd>
-      <dt>Version Change Description          </dt><dd>{{app.version_change_description  }}</dd>
-      <dt>Version Number          </dt><dd>{{app.version_number  }}</dd>
-    </dl>
-  </div>
-  <div class="span4">
-    <h2 id="vitals">VitalsXXX</h2>
-    <dl>
-      <dt>Acronym                     </dt><dd>{{app.acronym                     }}</dd>
-      <dt>Release                     </dt><dd><span class="{{app_class}}">{{app.release|default:"[No#]"     }}</span></dd>
-    {#<dt>acronymrelease              </dt><dd>{{app.acronymrelease              }}</dd>#}
-      <dt>App Status                  </dt><dd><span class="{{app_class}}">{{app.app_status.all|join:", "          }}</span></dd>
-      <dt>Release Date                </dt><dd>{{app.release_date|date:"m/d/Y"   }}</dd>
-      <dt>Release Status              </dt><dd>{{app.release_status              }}</dd>
-    </dl>
+  <div class="span12">
+    <h2 id="comments">Comments</h2>
+    <p>{{app.comments}}</p>
   </div>
 </div>
-
-<div class="row-fluid well">
-  <div class="span8">
-    <h2 id="details">Administrative</h2>
-    <dl>
-      <dt>Architecture Type           </dt><dd>{{app.architecture_type.all|join:", "           }}</dd>
-      <dt>Branch Manager Name ?           </dt><dd>{{app.BRANCH_MANAGER_NAME  }}</dd>
-      <dt>Contract Task Order Numbers?           </dt><dd>{{app.BRANCH_MANAGER_NAME  }}</dd>
-      <dt>Contractor/Civil Servant Managed Records ?           </dt><dd>{{app.BRANCH_MANAGER_NAME  }}</dd>
-      <dt>Developer-Alternate                    </dt><dd>{{app.app_status_comments         }}</dd>
-      <dt>Developer-Primary             </dt><dd>{{app.functional_type.all|join:", "             }}</dd>
-      <dt>HITSS Supported                    </dt><dd>{{app.app_type.all|join:", "                    }}</dd>
-      <dt>IT&CD Security Owner Name           </dt><dd>{{app.software_category.all|join:", "           }}</dd>
-      <dt>NASA Analyst Name                   </dt><dd>{{app.app_usage.all|join:", "                   }}</dd>
-      <dt>NASA Owner Name             </dt><dd>{{app.app_users_num               }}</dd>
-      <dt>NASA Owner Org Code                   </dt><dd>{{app.frequency                   }}</dd>
-      <dt>NASA OWNER Organization Name             </dt><dd>{{app.browser_support.all|join:", "             }}</dd>
-      <dt>NASA Requestor                   </dt><dd><a href="{{app.html_link}}">{{app.html_link}}</a> </dd>
-      <dt>Number of Users              </dt><dd>{{app.support_status.all|join:", "              }}</dd>
-      <dt>OTS Supplier Contact Information                 </dt><dd>{{app.sw_language.all|join:", "                 }}</dd>
-      <dt>OTS Supplier Org Name                </dt><dd>{{app.triage_level                }}</dd>
-      <dt>Project Manager Name                </dt><dd>{{app.triage_level                }}</dd>
-      <dt>Service Request Class(s)                </dt><dd>{{app.triage_level                }}</dd>
-      <dt>Service Request Numbers                </dt><dd>{{app.triage_level                }}</dd>
-      <dt>Support Class                </dt><dd>{{app.triage_level                }}</dd>
-      <dt>Tier Transfer Level                </dt><dd>{{app.triage_level                }}</dd>
-    </dl>
-  </div>
-  <div class="span4">
-    <h2 id="personnel">XXX Personnel</h2>
-    <dl>
-      <dt>Owner                       </dt><dd>{{app.owner                       }}</dd>
-      <dt>Owner Org                   </dt><dd>{{app.owner_org                   }}</dd>
-      <dt>Owner Org Name              </dt><dd>{{app.owner_org_name              }}</dd>
-      <dt>NASA Official Name          </dt><dd>{{app.nasa_off_name               }}</dd>
-      <dt>NASA Requester              </dt><dd>{{app.nasa_requester              }}</dd>
-      <dt>GOTS POC                    </dt><dd>{{app.gots_poc                    }}</dd>
-      <dt>Manager App Development     </dt><dd>{{app.manager_app_development     }}</dd>
-      <dt>Manager Project             </dt><dd>{{app.manager_project             }}</dd>
-      <dt>Managed Records             </dt><dd>{{app.managed_records             }}</dd> <!-- ? -->
-      <dt>Developer Primary           </dt><dd>{{app.dev_name_primary            }}</dd>
-      <dt>Developer Alternate         </dt><dd>{{app.dev_name_alternate          }}</dd>
-    </dl>
-  </div>
-</div>
-
 
 <div class="row-fluid well">
   <div class="span6">
-    <h2 id="systems">Systems</h2>
+    <h2 id=="description">Description</h2>
     <dl>
-      <dt>Internal System             </dt><dd>{{app.internal_system             }}</dd>
-      <dt>Location                    </dt><dd>{{app.location.all|join:", "                    }}</dd>
-      <dt>DBMS Name                   </dt><dd>{{app.dbms_name.all|join:", "                   }}</dd>
-      <dt>Network Services Used       </dt><dd>{{app.network_services_used.all|join:", "       }}</dd>
-      <dt>Server App Name             </dt><dd>{{app.server_app_name             }}</dd>
-      <dt>Server DB Name              </dt><dd>{{app.server_db_name.all|join:", "              }}</dd>
-      <dt>Server Report Name          </dt><dd>{{app.server_report_name          }}</dd>
+      <dt>Acronym                       </dt><dd>{{app.acronym                          }}</dd><dd class="previous">{{app.acronym_previous                          }}</dd>
+      <dt>Description                   </dt><dd>{{app.description                      }}</dd><dd class="previous">{{app.description_previous                      }}</dd>
+      <dt>Name                          </dt><dd>{{app.name                             }}</dd><dd class="previous">{{app.name_previous                             }}</dd>
+      <dt>Software Class                </dt><dd>{{app.software_class                   }}</dd><dd class="previous">{{app.software_previous_class                   }}</dd>
+      <dt>User Groups                   </dt><dd>{{app.user_groups                      }}</dd><dd class="previous">{{app.user_previous_groups                      }}</dd>
+      <dt>Version Change Description    </dt><dd>{{app.version_change_description       }}</dd><dd class="previous">{{app.version_previous_change_description       }}</dd>
+      <dt>Version Number                </dt><dd>{{app.version_number                   }}</dd><dd class="previous">{{app.version_previous_number                   }}</dd>
     </dl>
   </div>
   <div class="span6">
-    <h2 id="interfaces">Interfaces</h2>
+    <h2 id="technical">Technical</h2>
     <dl>
-      <dt>Acronym Interface           </dt><dd>{{app.acronym_interface           }}</dd>
-      <dt>Interface Direction         </dt><dd>{{app.acronym_inter_direction     }}</dd>
-      <dt>Interface Method            </dt><dd>{{app.acronym_inter_method        }}</dd>
+      <dt>Architecture Type             </dt><dd>{{app.architecture_type                }}</dd><dd class="previous">{{app.architecture_previous_type                }}</dd>
+      <dt>DBMS Name and Version         </dt><dd>{{app.dbms_names_and_version           }}</dd><dd class="previous">{{app.dbms_previous_names_and_version           }}</dd>
+      <dt>Interface Acronym             </dt><dd>{{app.interface_acronym                }}</dd><dd class="previous">{{app.interface_previous_acronym                }}</dd>
+      <dt>Interface Direction           </dt><dd>{{app.interface_direction              }}</dd><dd class="previous">{{app.interface_previous_direction              }}</dd>
+      <dt>Interface Method              </dt><dd>{{app.interface_method                 }}</dd><dd class="previous">{{app.interface_previous_method                 }}</dd>
+      <dt>Internal or External System   </dt><dd>{{app.internal_or_external_system      }}</dd><dd class="previous">{{app.internal_previous_or_external_system      }}</dd>
+      <dt>Network Services Used         </dt><dd>{{app.network_services_used.all        }}</dd><dd class="previous">{{app.network_services_used.all_previous        }}</dd>
+      <dt>Servers - Application         </dt><dd>{{app.servers_application              }}</dd><dd class="previous">{{app.servers_previous_application              }}</dd>
+      <dt>Servers - Database            </dt><dd>{{app.servers_database                 }}</dd><dd class="previous">{{app.servers_previous_database                 }}</dd>
+      <dt>Servers - Report              </dt><dd>{{app.servers_report                   }}</dd><dd class="previous">{{app.servers_previous_report                   }}</dd>
+      <dt>Servers Location              </dt><dd>{{app.servers_location                 }}</dd><dd class="previous">{{app.servers_previous_location                 }}</dd>
+      <dt>Software Names and Versions   </dt><dd>{{app.software_names_and_versions      }}</dd><dd class="previous">{{app.software_previous_names_and_versions      }}</dd>
+      <dt>URL Link                      </dt><dd><a href="{{app_url_link}}">{{app.url_link}}</a></dd><dd><a href="{{app_url_link_previous}}">{{app.url_link_previous}}</a></dd>
+      <dt>Version Status                </dt><dd>{{app.version_status                   }}</dd><dd class="previous">{{app.version_previous_status                   }}</dd>
     </dl>
   </div>
 </div>
 
 <div class="row-fluid well">
-  <div class="span8">
+  <div class="span6">
+    <h2 id="administrative">Administrative</h2>
+    <dl>
+      <dt>Application Type              </dt><dd>{{app.application_type                 }}</dd><dd class="previous">{{app.application_previous_type                 }}</dd>
+      <dt>HITSS Supported               </dt><dd>{{app.hitss_supported                  }}</dd><dd class="previous">{{app.hitss_previous_supported                  }}</dd>
+      <dt>Number of Users               </dt><dd>{{app.number_of_users                  }}</dd><dd class="previous">{{app.number_previous_of_users                  }}</dd>
+      <dt>Project Manager Name          </dt><dd>{{app.project_manager_name             }}</dd><dd class="previous">{{app.project_previous_manager_name             }}</dd>
+      <dt>Service Request Class(s)      </dt><dd>{{app.service_request_classs           }}</dd><dd class="previous">{{app.service_previous_request_classs           }}</dd>
+      <dt>Service Request Numbers       </dt><dd>{{app.servie_request_numbers           }}</dd><dd class="previous">{{app.servie_previous_request_numbers           }}</dd>
+      <dt>Support Class                 </dt><dd>{{app.support_class                    }}</dd><dd class="previous">{{app.support_previous_class                    }}</dd>
+    </dl>
+  </div>
+  <div class="span6">
     <h2 id="compliance">Compliance</h2>
     <dl>
-      <dt>508 Compliance Review Date              </dt><dd>{{app.awrs_checklist              }}</dd>
-      <dt>Application Data Impact Type              </dt><dd>{{app.awrs_checklist              }}</dd>
-      <dt>AWRS Checklist on File             </dt><dd>{{app.awrs_checklist              }}</dd>
-      <dt>Compliance - 2810       </dt><dd>{{app.compliance_2810         }}</dd>
-      <dt>Compliance - 508       </dt><dd>{{app.compliance_508         }}</dd>
-      <dt>Compliance - AWRS       </dt><dd>{{app.compliance_awrs         }}</dd>
-      <dt>Fed Record Qualification    </dt><dd>{{app.fed_record_qualification    }}</dd>
-      <dt>Filed With Registy                 </dt><dd>{{app.fed_registy                 }}</dd>
-      <dt>Information Sensitivity                 </dt><dd>{{app.security_sensitivity        }}</dd>
-      <dt>NRR Item            </dt><dd>{{app.nrrs_disposition            }}</dd>
-      <dt>NRR Schedule          </dt><dd>{{app.nrrs_schedule_item          }}</dd>
-      <dt>NRRS Disposition            </dt><dd>{{app.nrrs_disposition            }}</dd>
-      <dt>NRRS Schedule/ Item          </dt><dd>{{app.nrrs_schedule_item          }}</dd>
-      <dt>Privacy Act System                 </dt><dd>{{app.privacy_act                 }}</dd>
-      <dt>Privacy Info Data Types                 </dt><dd>{{app.privacy_act                 }}</dd>
-      <dt>Privacy Info Indicator                 </dt><dd>{{app.privacy_act                 }}</dd>
-      <dt>Security Plan Number             </dt><dd>{{app.sec_plan_number             }}</dd>
-      <dt>Security Scan Date             </dt><dd>{{app.sec_plan_number             }}</dd>
-      <dt>Server FIPS Information Category          </dt><dd>{{app.fips_info_category          }}</dd>
-      <dt>SORN - System of Records Notice Number                        </dt><dd>{{app.sorn                        }}</dd>
-      <dt>SSN System                  </dt><dd>{{app.ssn_system                  }}</dd>
-    </dl>
-  </div>
-  <div class="span4">
-    <h2 id="security">Security</h2>
-    <dl>
-      <dt>ITCD Owner                  </dt><dd>{{app.security_itcd_owner         }}</dd>
-      <dt>PII Indicator               </dt><dd>{{app.security_pii_indicator      }}</dd>
-      <dt>PII Type                    </dt><dd>{{app.security_pii_type.all|join:", "           }}</dd>
-      <dt>Authentication_Type         </dt><dd>{{app.authentication_type.all|join:", "         }}</dd>
-      <dt>BIA Category                </dt><dd>{{app.bia_category                }}</dd>
-      <dt>Firewall Factor             </dt><dd>{{app.firewall_factor             }}</dd>
+      <dt>Compliance - 508              </dt><dd>{{app.compliance_508                   }}</dd><dd class="previous">{{app.compliance_previous_508                   }}</dd>
+      <dt>Data Impact Type              </dt><dd>{{app.data_impact_type                 }}</dd><dd class="previous">{{app.data_previous_impact_type                 }}</dd>
+      <dt>FIPS Information Category     </dt><dd>{{app.fips_information_category        }}</dd><dd class="previous">{{app.fips_previous_information_category        }}</dd>
+      <dt>Security Plan Number          </dt><dd>{{app.security_plan_number             }}</dd><dd class="previous">{{app.security_previous_plan_number             }}</dd>
     </dl>
   </div>
 </div>
 
-<div class="row-fluid well">
-  <div class="span6">
-    <h2 id="process">Process</h2>
-    <dl>
-      <dt>SR Class                    </dt><dd>{{app.sr_class.all|join:", "                    }}</dd>
-      <dt>SR Number                   </dt><dd>{{app.sr_number                   }}</dd>
-      <dt>SR Task Order               </dt><dd>{{app.sr_task_order               }}</dd>
-      <dt>CM Resubmit Date            </dt><dd>{{app.cm_resubmit_date            }}</dd>
-      <dt>CM Entered Time             </dt><dd>{{app.cm_entered_time             }}</dd>
-      <dt>Re-entered Time             </dt><dd>{{app.re_entered_time             }}</dd>
-    </dl>
-  </div>
-  <div class="span6">
-    <h2 id="tbd">TBD</h2>
-    <dl>
-      <dt>PK Doc Number               </dt><dd>{{app.pk_doc_number               }}</dd>
-    </dl>
-  </div>
-</div>
+
+
 
 
 {% endblock %}
