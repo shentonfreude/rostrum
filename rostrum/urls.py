@@ -26,7 +26,7 @@ urlpatterns = patterns(
     url(r'^$',                  home,           name='home'),
     url(r'^about$',             about,          name='about'),
 
-#    url(r'^app/',               include('app.urls')),
+    url(r'^app/',               include('app.urls')),
 #    url(r'^report/',            include('report.urls')),
 
 

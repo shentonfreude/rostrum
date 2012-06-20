@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block leftnav %}
+<li class="nav-header">Quick Jump...</li>
+{% for c in alphabin %}
+<li><a href="#{{c}}">{{c}}</a></li>
+{% endfor %}
+{% endblock %}
+
+{% block content %}
+<h1>Applications Overview</h1>
+
+<p>Acronyms and basic features of all Applications are given here. Click on one for details.</p>
+
+<p>Color labels indicate whether an app has is
+  <span class="{{bootstrap_label.In_Development}}">In Development</span>
+  (preferred), or
+  <span class="{{bootstrap_label.Current_Version}}">Current Version</span>
+  (not shown if there's also a Development version).
+</p>
+
+<table class="table">
+
+  <thead>
+    <tr>
+      <th>Acronym</th>
+      <th>Version</th>
+      <th>Name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for app in apps %}
+    <tr>
+      <td>{{app.acronym}}</td>
+      <td><a class="{{acronym_class}}"
+             href="{% url app_details id=app.id %}">
+          {{app.version_number|default:"[No#]"}}
+        </a>
+      </td>
+
+      <td>{{app.name}}</td>
+      <td>{{app.description}}</td>
+      <td>{{app.id}}</td>
+    </tr>
+    {% endfor %}
+
+  </tbody>
+
+</table>
+
+{% endblock %}

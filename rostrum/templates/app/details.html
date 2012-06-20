@@ -46,16 +46,21 @@
 
 <div class="row-fluid well">
   <div class="span8">
-    <h2 id=="overview">Overview</h2>
+    <h2 id=="descriptive">Descriptive</h2>
     <dl>
-      <dt>Name                        </dt><dd>{{app.app_name                    }}</dd>
-      <dt>Description                 </dt><dd>{{app.description                 }}</dd>
-      <dt>Change Description          </dt><dd>{{app.release_change_description  }}</dd>
-      <dt>Release Notes               </dt><dd>{{app.release_notes               }}</dd>
+      <dt>Acronum                        </dt><dd>{{app.acronym                    }}</dd>
+      <dt>Description                        </dt><dd>{{app.description                    }}</dd>
+      <dt>Frequency Used ?                 </dt><dd>{{app.FREQUENCY_USED_name                    }}</dd>
+      <dt>Functional Types                        </dt><dd>{{app.application_type                    }}</dd>
+      <dt>Name                        </dt><dd>{{app.name                    }}</dd>
+      <dt>Release Notes ?              </dt><dd>{{app.RELEASE_NOTES               }}</dd>
+      <dt>User Groups                 </dt><dd>{{app.user_groups                 }}</dd>
+      <dt>Version Change Description          </dt><dd>{{app.version_change_description  }}</dd>
+      <dt>Version Number          </dt><dd>{{app.version_number  }}</dd>
     </dl>
   </div>
   <div class="span4">
-    <h2 id="vitals">Vitals</h2>
+    <h2 id="vitals">VitalsXXX</h2>
     <dl>
       <dt>Acronym                     </dt><dd>{{app.acronym                     }}</dd>
       <dt>Release                     </dt><dd><span class="{{app_class}}">{{app.release|default:"[No#]"     }}</span></dd>
@@ -68,26 +73,34 @@
 </div>
 
 <div class="row-fluid well">
-  <div class="span6">
-    <h2 id="details">Details</h2>
+  <div class="span8">
+    <h2 id="details">Administrative</h2>
     <dl>
-      <dt>Comments                    </dt><dd>{{app.app_status_comments         }}</dd>
-      <dt>Functional Type             </dt><dd>{{app.functional_type.all|join:", "             }}</dd>
-      <dt>App Type                    </dt><dd>{{app.app_type.all|join:", "                    }}</dd>
-      <dt>Software Category           </dt><dd>{{app.software_category.all|join:", "           }}</dd>
       <dt>Architecture Type           </dt><dd>{{app.architecture_type.all|join:", "           }}</dd>
-      <dt>App Usage                   </dt><dd>{{app.app_usage.all|join:", "                   }}</dd>
-      <dt>Number of Users             </dt><dd>{{app.app_users_num               }}</dd>
-      <dt>Frequency                   </dt><dd>{{app.frequency                   }}</dd>
-      <dt>Browser Support             </dt><dd>{{app.browser_support.all|join:", "             }}</dd>
-      <dt>HTML Link                   </dt><dd><a href="{{app.html_link}}">{{app.html_link}}</a> </dd>
-      <dt>Support Status              </dt><dd>{{app.support_status.all|join:", "              }}</dd>
-      <dt>SW Language                 </dt><dd>{{app.sw_language.all|join:", "                 }}</dd>
-      <dt>Triage Level                </dt><dd>{{app.triage_level                }}</dd>
+      <dt>Branch Manager Name ?           </dt><dd>{{app.BRANCH_MANAGER_NAME  }}</dd>
+      <dt>Contract Task Order Numbers?           </dt><dd>{{app.BRANCH_MANAGER_NAME  }}</dd>
+      <dt>Contractor/Civil Servant Managed Records ?           </dt><dd>{{app.BRANCH_MANAGER_NAME  }}</dd>
+      <dt>Developer-Alternate                    </dt><dd>{{app.app_status_comments         }}</dd>
+      <dt>Developer-Primary             </dt><dd>{{app.functional_type.all|join:", "             }}</dd>
+      <dt>HITSS Supported                    </dt><dd>{{app.app_type.all|join:", "                    }}</dd>
+      <dt>IT&CD Security Owner Name           </dt><dd>{{app.software_category.all|join:", "           }}</dd>
+      <dt>NASA Analyst Name                   </dt><dd>{{app.app_usage.all|join:", "                   }}</dd>
+      <dt>NASA Owner Name             </dt><dd>{{app.app_users_num               }}</dd>
+      <dt>NASA Owner Org Code                   </dt><dd>{{app.frequency                   }}</dd>
+      <dt>NASA OWNER Organization Name             </dt><dd>{{app.browser_support.all|join:", "             }}</dd>
+      <dt>NASA Requestor                   </dt><dd><a href="{{app.html_link}}">{{app.html_link}}</a> </dd>
+      <dt>Number of Users              </dt><dd>{{app.support_status.all|join:", "              }}</dd>
+      <dt>OTS Supplier Contact Information                 </dt><dd>{{app.sw_language.all|join:", "                 }}</dd>
+      <dt>OTS Supplier Org Name                </dt><dd>{{app.triage_level                }}</dd>
+      <dt>Project Manager Name                </dt><dd>{{app.triage_level                }}</dd>
+      <dt>Service Request Class(s)                </dt><dd>{{app.triage_level                }}</dd>
+      <dt>Service Request Numbers                </dt><dd>{{app.triage_level                }}</dd>
+      <dt>Support Class                </dt><dd>{{app.triage_level                }}</dd>
+      <dt>Tier Transfer Level                </dt><dd>{{app.triage_level                }}</dd>
     </dl>
   </div>
-  <div class="span6">
-    <h2 id="personnel">Personnel</h2>
+  <div class="span4">
+    <h2 id="personnel">XXX Personnel</h2>
     <dl>
       <dt>Owner                       </dt><dd>{{app.owner                       }}</dd>
       <dt>Owner Org                   </dt><dd>{{app.owner_org                   }}</dd>
@@ -129,32 +142,41 @@
 </div>
 
 <div class="row-fluid well">
-  <div class="span6">
+  <div class="span8">
+    <h2 id="compliance">Compliance</h2>
+    <dl>
+      <dt>508 Compliance Review Date              </dt><dd>{{app.awrs_checklist              }}</dd>
+      <dt>Application Data Impact Type              </dt><dd>{{app.awrs_checklist              }}</dd>
+      <dt>AWRS Checklist on File             </dt><dd>{{app.awrs_checklist              }}</dd>
+      <dt>Compliance - 2810       </dt><dd>{{app.compliance_2810         }}</dd>
+      <dt>Compliance - 508       </dt><dd>{{app.compliance_508         }}</dd>
+      <dt>Compliance - AWRS       </dt><dd>{{app.compliance_awrs         }}</dd>
+      <dt>Fed Record Qualification    </dt><dd>{{app.fed_record_qualification    }}</dd>
+      <dt>Filed With Registy                 </dt><dd>{{app.fed_registy                 }}</dd>
+      <dt>Information Sensitivity                 </dt><dd>{{app.security_sensitivity        }}</dd>
+      <dt>NRR Item            </dt><dd>{{app.nrrs_disposition            }}</dd>
+      <dt>NRR Schedule          </dt><dd>{{app.nrrs_schedule_item          }}</dd>
+      <dt>NRRS Disposition            </dt><dd>{{app.nrrs_disposition            }}</dd>
+      <dt>NRRS Schedule/ Item          </dt><dd>{{app.nrrs_schedule_item          }}</dd>
+      <dt>Privacy Act System                 </dt><dd>{{app.privacy_act                 }}</dd>
+      <dt>Privacy Info Data Types                 </dt><dd>{{app.privacy_act                 }}</dd>
+      <dt>Privacy Info Indicator                 </dt><dd>{{app.privacy_act                 }}</dd>
+      <dt>Security Plan Number             </dt><dd>{{app.sec_plan_number             }}</dd>
+      <dt>Security Scan Date             </dt><dd>{{app.sec_plan_number             }}</dd>
+      <dt>Server FIPS Information Category          </dt><dd>{{app.fips_info_category          }}</dd>
+      <dt>SORN - System of Records Notice Number                        </dt><dd>{{app.sorn                        }}</dd>
+      <dt>SSN System                  </dt><dd>{{app.ssn_system                  }}</dd>
+    </dl>
+  </div>
+  <div class="span4">
     <h2 id="security">Security</h2>
     <dl>
       <dt>ITCD Owner                  </dt><dd>{{app.security_itcd_owner         }}</dd>
       <dt>PII Indicator               </dt><dd>{{app.security_pii_indicator      }}</dd>
       <dt>PII Type                    </dt><dd>{{app.security_pii_type.all|join:", "           }}</dd>
-      <dt>Sensitivity                 </dt><dd>{{app.security_sensitivity        }}</dd>
       <dt>Authentication_Type         </dt><dd>{{app.authentication_type.all|join:", "         }}</dd>
       <dt>BIA Category                </dt><dd>{{app.bia_category                }}</dd>
-      <dt>FIPS Info Category          </dt><dd>{{app.fips_info_category          }}</dd>
       <dt>Firewall Factor             </dt><dd>{{app.firewall_factor             }}</dd>
-      <dt>Privacy Act                 </dt><dd>{{app.privacy_act                 }}</dd>
-      <dt>Sec Plan Number             </dt><dd>{{app.sec_plan_number             }}</dd>
-      <dt>SSN System                  </dt><dd>{{app.ssn_system                  }}</dd>
-    </dl>
-  </div>
-  <div class="span6">
-    <h2 id="certification">Certification</h2>
-    <dl>
-      <dt>AWRS Checklist              </dt><dd>{{app.awrs_checklist              }}</dd>
-      <dt>AWRS Indicator              </dt><dd>{{app.awrs_indicator              }}</dd>
-      <dt>Fed Record Qualification    </dt><dd>{{app.fed_record_qualification    }}</dd>
-      <dt>Fed Registy                 </dt><dd>{{app.fed_registy                 }}</dd>
-      <dt>HITSS Supported             </dt><dd>{{app.hitss_supported             }}</dd>
-      <dt>Section 2810 Compliant      </dt><dd>{{app.section2810compliant        }}</dd>
-      <dt>Section 508 Compliant       </dt><dd>{{app.section508complaint         }}</dd>
     </dl>
   </div>
 </div>
@@ -174,10 +196,7 @@
   <div class="span6">
     <h2 id="tbd">TBD</h2>
     <dl>
-      <dt>NRRS Disposition            </dt><dd>{{app.nrrs_disposition            }}</dd>
-      <dt>NRRS Schedule Item          </dt><dd>{{app.nrrs_schedule_item          }}</dd>
       <dt>PK Doc Number               </dt><dd>{{app.pk_doc_number               }}</dd>
-      <dt>SORN                        </dt><dd>{{app.sorn                        }}</dd>
     </dl>
   </div>
 </div>
