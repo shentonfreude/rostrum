@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Version Details</h1>
+
+<div class="row-fluid">
+  <div class="span8">
+    <dl>
+      <dt>Acronym</dt><dd>{{version.application.acronym}}</dd>
+      <dt>Name</dt><dd>{{version.application.name}}</dd>
+      <dt>Description</dt><dd>{{version.application.description}}</dd>
+    </dl>
+  </div>
+  <div class="span4">
+    <dl>
+      <dt>NASA Owner</dt><dd>{{version.nasa_owner_name}}</dd>
+      <dt>functional_types</dt><dd>{{version.functional_types}}</dd>
+      <dt>NASA Analyst</dt><dd>{{version.nasa_analyst_name}}</dd>
+      <dt>Software Class</dt><dd>{{version.software_class}}</dd>
+      <dt>Version Status</dt><dd>{{version.version_status}}</dd>
+      <dt>Release Date</dt><dd>{{version.release_date}}</dd>
+      <dt>Application Type</dt><dd>{{version.application_type}}</dd>
+
+    </dl>
+  </div>
+</div>
+
+{% endblock %}

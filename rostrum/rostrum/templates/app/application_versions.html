@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block leftnav %}
+<li class="nav-header">Quick Jump...</li>
+{% for c in alphabin %}
+<li><a href="#{{c}}">{{c}}</a></li>
+{% endfor %}
+{% endblock %}
+
+<li class="
+{% block content %}
+<h1>All Applications and Versions</h1>
+
+<p>Every application is listed by its acronym, which you can click to
+go to an overview of all releases.</p>
+
+<p>Each provides a link to every release version of the application,
+color-coded by status:
+  <span class="{{bootstrap_label.Archived}}">Archived</span>,
+  <span class="{{bootstrap_label.Cancelled}}">Cancelled</span>,
+  <span class="{{bootstrap_label.Current_Version}}">Current Version</span>,
+  <span class="{{bootstrap_label.In_Suspense}}">In Suspense</span>,
+  <span class="{{bootstrap_label.In_Development}}">In Development</span>,
+  <span class="{{bootstrap_label.Unassigned}}">Unassigned</span>.
+</p>
+
+
+<table class="table">
+
+  <thead>
+    <tr>
+      <th>Acronym</th>
+      <th>Versions</th>
+    </tr>
+  </thead>
+
+{% for c, acros_releases in alphabin.items %}
+  <tbody id="{{c}}">
+
+    {% for acro, releases in acros_releases %}
+    <tr>
+      <td><a href="{% url acronyms acronym=acro|urlencode %}">{{acro}}</a></td>
+      <td>
+        {% for release in releases %}
+        <a class="{{ release.app_class }}"
+           href="{% url app_details release.id %}">{{release.release|default:"[No#]"}}</a>
+        {% endfor %}{# release #}
+      </td>
+    </tr>
+    {% endfor %}{#acro,releases#}
+  </tbody>
+{% endfor %}{#for c,acros_releases#}
+  
+</table>
+
+
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block extrascript %}
+<script>
+  $(document).ready(function()
+    {
+        $("#resultsTable").tablesorter();
+    }
+);
+</script>
+{% endblock %}
+
+{% block title %}Search Results [ROSA]{% endblock %}
+
+{% block content %}
+
+<h1>Application Search Results ({{ object_list|length }})</h1>
+
+<p>You can click on an Acronym to go to an overview page of various
+releases, or on a Release number to go to a details page.</p>
+
+<p>The table is <em>sortable</em>, just click on a header.</p>
+
+<table id="resultsTable" class="table tablesorter">
+
+  <thead>
+    <tr>
+      <th>Acronym</th>
+      <th>Release</th>
+      <th>Status</th>
+      <th>Release Date</th> {# BUG: sorts on alpha April 1, 2012 ... June 30, 1960 #}
+      <th>SR Number</th>
+      <th>SR Class</th>
+      <th>NASA Requester</th>
+      <th>Name</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for app in object_list %}
+    <tr>
+      <td><a href="{% url acronyms acronym=app.acronym %}">{{app.acronym}}</a></td>
+      <td><a href="{% url app_details object_id=app.id %}">{{app.release|default:"[No#]"}}</a></td>
+      <td><span
+             {% with status=app.app_status.all|join:"" %}
+             {% if "Current" in status %}
+             class="{{bootstrap_label.Current_Version}}"
+             {% elif "In Development" in status %}
+             class="{{bootstrap_label.In_Development}}"
+             {% elif "In Suspense" in status %}
+             class="{{bootstrap_label.In_Suspense}}"
+             {% endif %}
+             >
+          {{status}}
+          {% endwith %}
+          </span>
+          </td>
+      <td>{{app.release_date|date:"m/d/Y"}}</td>
+      <td>{{app.sr_number}}</td>
+      <td>{{app.sr_class.all|join:", "}}</td>
+      <td>{{app.nasa_requester}}</td>
+      <td>{{app.app_name}}</td>
+    </tr>
+    {% endfor %}
+
+  </tbody>
+
+</table>
+
+{% endblock %}

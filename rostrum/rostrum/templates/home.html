@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load bootstrap %}
+
+{% block content %}
+<div class="hero-unit">
+  <h1>ROSA <img src="{{STATIC_URL}}img/rose.png"/></h1>
+  <p>The Repository of Supported Applications is a web application
+    for browsing and querying information about NASA HQ applications.</p>
+  <p><a class="btn btn-large" a href="{% url about %}">Learn more &raquo;</a></p>
+</div>
+
+
+<h2>How to Use It</h2>
+
+<p>You can use the search box in the upper left of each page to search for applications by acronym, name, and description (more attributes later).</p>
+
+<p>Use the menu-bar <a href="{% url acronyms
+%}"><i class="icon-th-list"> </i>Acronyms</a> button to browse all the
+applicaitons by acronym, then drill down to a specific one to see an
+overview of each release.</p>
+
+<p>The <a href="{# url app_versions %}"><i class="icon-th"></i> All
+Versions</a> menu-bar button displays an overview of all applications
+and all their versions, color-coded by the status of the release.</p>
+
+<p>The menu-bar <a href="{# url search %}"><i class="icon-search"></i> Search</a> button will
+eventually offer a sophisticated interface for complex queries, but
+for now duplicates the quick search box in the upper left of ever
+page.</p>
+
+{% endblock %}
+

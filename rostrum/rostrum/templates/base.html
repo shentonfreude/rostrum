@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{% block title %}ROSTRUM: ROSA & STRAW Visualization{% endblock %}</title>
+    <meta name="description" content="Repository Of Supported Applications">
+    <meta name="author" content="Chris Shenton">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+
+    <!-- Le styles -->
+    <link href="{{STATIC_URL}}bootstrap/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+    </style>
+    <link href="{{STATIC_URL}}bootstrap/css/responsive.css" rel="stylesheet">
+    <link href="{{STATIC_URL}}tablesorter/style.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="{{STATIC_URL}}img/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{STATIC_URL}}bootstrap/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{STATIC_URL}}bootstrap/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="{{STATIC_URL}}bootstrap/ico/apple-touch-icon-57-precomposed.png">
+
+
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="#">ROSTRUM</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li><a href="{% url home %}">       <i class="icon-white icon-home"></i>      Home</a></li>
+              <li><a href="{# url acronyms %}">  <i class="icon-white icon-th-list"></i>      Acronyms</a></li>
+              <li><a href="{# url app_versions%}"><i class="icon-white icon-th"></i>      All Versions</a></li>
+              <li><a href="{# url search %}">     <i class="icon-white icon-search"></i>    Search</a></li>
+              <li><a href="{# url report %}">     <i class="icon-white icon-list-alt"></i>       Report</a></li>
+              <li><a href="{# url about %}">   <i class="icon-white icon-info-sign"></i> About</a></li>
+              <li><a href="{# url manage %}">  <i class="icon-white icon-cog"></i>       Manage</a></li>
+              <li><a href="#contact">          <i class="icon-white icon-envelope"></i>  Contact</a></li>
+              <li><a href="#exit">    <i class="icon-white icon-off"></i>       Exit</a></li>
+            </ul>
+            <p class="navbar-text pull-right"> <i class="icon-white icon-user"></i>      Logged in as <a href="#">username</a></p>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span2">
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              {% block leftsearch %}
+              <form action="{# url search %}" method="POST">
+                {% csrf_token %}
+                <input id="searchbox"
+                       data-provider="typeahead"
+                       type="text"
+                       name="text"
+                       class="input-medium search-query"
+                       placeholder="acronym, person, name, description, ..."
+                       style="width:70%" /> {# HACK: what's a better way? 90% for normal square box #}
+                <br/>
+                <button type="submit" class="btn">Quick Search <i class="icon icon-search"></i></button>
+              </form>
+              {% endblock %} {# leftnav #}
+              {% block leftnav %}
+              {% endblock %} {# leftnav #}
+            </ul>
+          </div><!--/.well -->
+        </div><!--/span-->
+
+
+        <div class="span10">
+          {% block content %}ADD YOUR BLOCK CONTENT{% endblock %}
+        </div><!--/span-->
+
+
+      </div><!--/row-->
+
+      <hr>
+
+      <footer>
+        <div class="row-fluid">
+          <div class="span3">
+            <p class="alert alert-block">
+              WARNING: This US Government computer is for authorized users
+              only. By accessing this system you are consenting to complete
+              monitoring with no expectation of privacy. Unauthorized access
+              or use may subject you to disciplinary action and criminal
+              prosecution.
+            </p>
+          </div>
+          <div class="span6">
+            <div class="alert alert-info">
+              <ul>
+                <li><a href="http://www.hq.nasa.gov/office/pao/FOIA/agency/">Freedom of Information Act</a></li>
+                <li><a href="http://www.nasa.gov/about/budget/index.html">Budgets, Strategic Plans and Accountability Reports</a></li>
+                <li><a href="http://www.nasa.gov/about/highlights/HP_Management.html">The President's Management Agenda</a></li>
+                <li><a href="http://www.nasa.gov/about/highlights/HP_Privacy.html">Privacy Policy and Important Notices</a></li>
+                <li><a href="http://oig.nasa.gov/hotline.html">Inspector General Hotline</a></li>
+                <li><a href="http://www.hq.nasa.gov/office/codee/nofear.html">Equal Employement Opportunity Data Posted Pursuant to the No Fear Act</a></li>
+                <li><a href="http://www.nasa.gov/about/contact/information_inventories_schedules.html">Information-Dissemination Priorities and Inventories</a></li>
+                <li><a href="http://www.usa.gov/">USA.gov</a></li>
+                <li><a href="http://www.whitehouse.gov/omb/expectmore/">ExpectMore.gov</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="span3">
+            <div class="alert-info">
+              <ul>
+                <li>NASA Official: <a href="john.galt@nasa.gov">John Galt</a></li>
+                <li>Site Curator: <a href="chris.shenton@nasa.gov">Chris Shenton</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </footer>
+
+    </div><!--/.fluid-container-->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="{{STATIC_URL}}js/jquery-1.7.2.min.js"></script>
+    <script src="{{STATIC_URL}}/bootstrap/js/bootstrap.js"></script>
+
+    <script src="{{STATIC_URL}}tablesorter/jquery.tablesorter.min.js"></script>
+
+    <script>
+      jQuery(document).ready(function () {
+        var search_suggestions = {{search_suggestions|safe}};
+        $('#searchbox').typeahead({source: search_suggestions, items: 5})
+      });
+    </script>
+
+
+
+    {% block extrascript %}
+    {# for including javascript document ready style functions #}
+    {% endblock %}
+
+
+    <!-- <script src="{{STATIC_URL}}bootstrap/js/bootstrap-transition.js"></script> -->
+    <!-- <script src="{{STATIC_URL}}bootstrap/js/bootstrap-alert.js"></script> -->
+    <!-- <script src="{{STATIC_URL}}bootstrap/js/bootstrap-modal.js"></script> -->
+    <!-- <script src="{{STATIC_URL}}bootstrap/js/bootstrap-dropdown.js"></script> -->
+    <!-- <script src="{{STATIC_URL}}bootstrap/js/bootstrap-scrollspy.js"></script> -->
+    <!-- <script src="{{STATIC_URL}}bootstrap/js/bootstrap-tab.js"></script> -->
+    <!-- <script src="{{STATIC_URL}}bootstrap/js/bootstrap-tooltip.js"></script> -->
+    <!-- <script src="{{STATIC_URL}}bootstrap/js/bootstrap-popover.js"></script> -->
+    <!-- <script src="{{STATIC_URL}}bootstrap/js/bootstrap-button.js"></script> -->
+    <!-- <script src="{{STATIC_URL}}bootstrap/js/bootstrap-collapse.js"></script> -->
+    <!-- <script src="{{STATIC_URL}}bootstrap/js/bootstrap-carousel.js"></script> -->
+    <!-- <script src="{{STATIC_URL}}bootstrap/js/bootstrap-typeahead.js"></script> -->
+
+  </body>
+</html>

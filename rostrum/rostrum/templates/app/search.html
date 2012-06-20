@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load bootstrap %}
+
+{% block title %}Search [ROSA]{% endblock %}
+
+{% block content %}
+<h1>Search</h1>
+
+<!-- To customize form UI see https://docs.djangoproject.com/en/dev/topics/forms/ -->
+
+<p>Search for a text in a variety of Application fields: acronym,
+name, description. This same function is available in the top-left
+search box on all pages.</p>
+
+<p>This will be replaced with a sophisticated search interface to
+query states of many different attaributes, so its function will
+diverge from the simple, omnipresent search box.</p>
+
+<form id="search" method="POST" action="." class="well form-horizontal">{% csrf_token %}
+  <table>
+  {# {{ form.as_table }} <!-- also: as_p, as_ul --> #}
+  {{ form|bootstrap }}
+  </table>
+  </br>
+  <button type="submit" class="btn btn-primary"><i class="icon-search icon-white"></i> Search</button>
+</form>
+
+{% endblock %}

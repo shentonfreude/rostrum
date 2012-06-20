@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block leftnav %}
+<li class="nav-header">Quick Jump...</li>
+{% for c in alphabin %}
+<li><a href="#{{c}}">{{c}}</a></li>
+{% endfor %}
+{% endblock %}
+
+{% block content %}
+<h1>Application Acronyms</h1>
+
+<p>Acronyms for each application are provided below; selecting one will show an overview of all releases for that application.</p>
+
+<p>Color labels indicate whether an app has is
+  <span class="{{bootstrap_label.In_Development}}">In Development</span>
+  (preferred), or
+  <span class="{{bootstrap_label.Current_Version}}">Current Version</span>
+  (not shown if there's also a Development version).
+</p>
+
+{% for c, acronyms in alphabin.items %}
+<a name="{{c}}"><h2>{{c}}</h2></a>
+<p>
+  {% for acronym, acronym_class in acronyms %}
+  <a class="{{acronym_class}}"
+     href="{% url acronyms acronym=acronym|urlencode %}">{{acronym}}</a>
+  {# &nbsp;&nbsp;   How can I put more space between these, or separate them? #}
+  {% endfor %}
+</p>
+{% endfor %}
+{% endblock %}

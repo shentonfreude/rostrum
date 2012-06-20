@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Applications</h1>
+
+<table class="table">
+
+  <thead>
+    <tr>
+      <th>Acronym</th>
+      <th>Version</th>
+      <th>Status</th>
+      <th>Release Date</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for obj in objs %}
+    <tr>
+      <td>{{obj.application.acronym}}</td>
+      <td><a href="{% url version_details object_id=obj.id %}">{{obj.version_number}}</a></td>
+      <td>{{obj.release_status}}</td>
+      <td>{{obj.release_date}}</td>
+    </tr>
+    {% endfor %}
+
+  </tbody>
+
+</table>
+
+{% endblock %}

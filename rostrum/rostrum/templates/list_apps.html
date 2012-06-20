@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Applications</h1>
+
+<table class="table">
+
+  <thead>
+    <tr>
+      <th>Acronym</th>
+      <th>Current Version</th>
+      <th>Name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for app in apps %}
+    <tr>
+      <td><a href="{% url list_app_versions object_id=app.id %}">{{app.acronym}}</a></td>
+      <td>{{app.current_version}}</td>
+      <td>{{app.name}}</td>
+      <td>{{app.description}}</td>
+    </tr>
+    {% endfor %}
+
+  </tbody>
+
+</table>
+
+{% endblock %}

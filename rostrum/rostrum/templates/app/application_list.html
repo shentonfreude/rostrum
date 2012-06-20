@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Applications</h1>
+
+<table class="table">
+
+  <thead>
+    <tr>
+      <th>Acronym</th>
+      <th>Current Version</th>
+      <th>Name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for app in object_list %}
+    <tr>
+      <td>{{app.acronym}}</td>
+      <td>{{app.release|default:"[No#]"}}</td>
+      <td>{{app.app_name}}</td>
+      <td>{{app.description}}</td>
+    </tr>
+    {% endfor %}
+
+  </tbody>
+
+</table>
+
+{% endblock %}
