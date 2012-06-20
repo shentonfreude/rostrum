@@ -7,6 +7,7 @@ TEMPLATE_DEBUG = DEBUG
 
 
 PROJECT_PATH = os.path.abspath(os.path.split(__file__)[0])
+logging.warning("settings.py: PROJECT_PATH=%s" % PROJECT_PATH)
 
 ADMINS = (
     ('Chris Shenton', 'chris.shenton@nasa.gov'),
@@ -132,10 +133,11 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
-    # Our app:
-    'bootstrapform',
+    # Our app: (FOR NOW, need rostrum.app for syncdb, 'app' for import
+        #
+    #'rostrum.app',
     'app',
-
+    'bootstrapform',
 )
 
 # A sample logging configuration. The only tangible logging

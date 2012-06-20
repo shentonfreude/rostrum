@@ -75,21 +75,24 @@ with open(sys.argv[1], 'rb') as f:
     reader = csv.DictReader(f)
     num_apps = 0
     for row in reader:
+        try:
+            logging.info("APP %d: %s %s" % (
+                    num_apps, row['Acronym'], row['Version Number'])) # must use unmogrified keys
+        except KeyError, e:
+            logging.error("Keyerrore=%s" %  e)
+            import pdb; pdb.set_trace()
         app = App()
         app.save()                  # save for M2M
-        logging.info("APP %d %d%%: %s %s" % (
-                num_apps, int(100 * num_apps / total_apps), row['acronym'], row['version']))
         for k, v in row.items():
             if k in UNUSED_FIELDS:
                 continue
             # MAYBE TODO: filter nulls from M2M, check nullish
-            kk = mogrify(k)
             v = v.strip()
             if not v:           # don't store empty values
                 continue
             # MAYBE TODO: transform Date, Time, Boolean, Integer
             try: 
-                setattr(app, kk, v)
+                setattr(app, mogrify(k), v)
             except (TypeError, ValidationError), e:
                 logging.error("SETATTR: %s", e)
                 import pdb; pdb.set_trace()

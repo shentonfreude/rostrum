@@ -30,3 +30,22 @@ Run empty app::
 
 
 
+Initialize DB from Models::
+
+           cd /Users/cshenton/Projects/core/rostrum
+rostrum/manage.py syncdb
+  ./manage.py syncdb
+
+
+TODO
+====
+
+I have too many levels of rostrum, and so the DB dir has to be pushed down.
+
+Django can't create passwd from Emacs::
+
+  File "/Users/cshenton/Projects/core/rostrum/lib/python2.7/site-packages/django/contrib/auth/management/__init__.py", line 85, in get_system_username
+      return getpass.getuser().decode(locale.getdefaultlocale()[1])
+  TypeError: decode() argument 1 must be string, not None
+
+so use a terminal.
