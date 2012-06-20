@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
-{% block title %}About [ROSA]{% endblock %}
+{% block title %}About [ROSTRUM]{% endblock %}
 
 {% block content %}
 
-<h1>About ROSA</h1>
+<h1>About ROSTRUM</h1>
 
 <p>The Repository of Supported Applications is a web application for
 browsing and querying information about NASA HQ applications,
@@ -17,44 +17,11 @@ provided in the Application Monthly Review (AMR).</p>
 
 <h1>What's New</h1>
 
-<h2>2012-04-03</h2>
+<h2>2012-06-19</h2>
 <ul>
-  <li>Search: results put Name at end so mobile browsers can see more useful meta-data</li>
-  <li>Search: colorize only the status words, not the block, easier to read</li>
-  <li>Search: Link Acronyms to acronym releases overview page</li>
-  <li>Details: put chunks into wells for easier readability</li>
+  <li>Request to visualize spreadsheet of current-only versions of apps from ROSA/STRAW</li>
+  <li>Propose Spread to CSV export, import into app, visualize as desired</li>
+  <li>Anti-feature: no editing, no export back to CSV -- CSV is canonical</li>
+  <li>Stole much code (except import) from my ROSA implemenation from 2012-04-01</li>
 </ul>
-<h2>2012-04-02</h2>
-<ul>
-  <li>Admin: group attributes by fieldsets reflecting Details groups.</li>
-  <li>Show "[No#]" for releases without a 'release' number.</li>
-  <li>Acronyms: speed up search 170x -- 5.2 to 0.03 seconds</li>
-  <li>All Versions: link acronym to page showing overview of all releases</li>
-  <li>Acronyms: color by status.
-  <li>Search box on top left of all pages.</li>
-  <li>About page with What's New</li>
-</ul>
-
-
-<h2>2012-04-01</h2>
-<ul>
-  <li>Provide overview of Acronyms, clickable to list of different releases of the Acronym</li>
-  <li>Search and other query results are sortable</li>
-  <li>Release numbers are colored by app_status, makes it very easy to see what's active</li>
-</ul>
-
-<h2>2012-03-31</h2>
-<ul>
-  <li>Show all versions of all apps: easy to see what's gotten lots of attention</li>
-  <li>Search by acronym, name, description</li>
-</ul>
-
-<h2>2012-03-30</h2>
-<ul>
-  <li>Only one server is used: no need for app, DB, report machines or licenses</li>
-  <li>ROSA JSON data imported</li>
-  <li>Schema inferred from imported data, re-used same names.</li>
-  <li>ROSA XML Export analyzed, parsed to JSON</li>
-</ul>
-
 {% endblock %}

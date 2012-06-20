@@ -2,7 +2,6 @@ from django.conf.urls import patterns, include, url
 
 from django.contrib import admin
 from django.views.generic.simple import direct_to_template, redirect_to
-#from application.views import home
 from views import home, about
 
 admin.autodiscover()
@@ -27,7 +26,7 @@ urlpatterns = patterns(
     url(r'^$',                  home,           name='home'),
     url(r'^about$',             about,          name='about'),
 
-#    url(r'^app/',               include('app.urls')),
+    url(r'^app/',               include('app.urls')),
 #    url(r'^report/',            include('report.urls')),
 
 
