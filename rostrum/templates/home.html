@@ -3,16 +3,20 @@
 
 {% block content %}
 <div class="hero-unit">
-  <h1>ROSA <img src="{{STATIC_URL}}img/rose.png"/></h1>
-  <p>The Repository of Supported Applications is a web application
-    for browsing and querying information about NASA HQ applications.</p>
+  <h1><img src="{{STATIC_URL}}img/rostrum.png"/>ROSTRUM</h1>
+  <p>ROSTRUM visualizes data about applications from ROSA and STRAW,
+  which have been gardened in a spreadsheet; only current versions are
+  maintained, history is not retained. The spreadsheet is exported as
+  CSV then this application can be used to show all applicaitons as an
+  overview, drill down to the categorized detail of an app, or view
+  categorized attributes based on category of all apps.</p>
   <p><a class="btn btn-large" a href="{% url about %}">Learn more &raquo;</a></p>
 </div>
 
 
 <h2>How to Use It</h2>
 
-<p>You can use the search box in the upper left of each page to search for applications by acronym, name, and description (more attributes later).</p>
+<!-- <p>You can use the search box in the upper left of each page to search for applications by acronym, name, and description (more attributes later).</p> -->
 
 <p>Use the menu-bar <a href="{% url acronyms
 %}"><i class="icon-th-list"> </i>Acronyms</a> button to browse all the
