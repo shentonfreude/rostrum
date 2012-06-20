@@ -15,7 +15,6 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models.fields import FieldDoesNotExist
 
-
 from app.models import App
 
 logging.basicConfig(level=logging.INFO)
@@ -75,23 +74,19 @@ with open(sys.argv[1], 'rb') as f:
     reader = csv.DictReader(f)
     num_apps = 0
     for row in reader:
-        try:
-            logging.info("APP %d: %s %s" % (
-                    num_apps, row['Acronym'], row['Version Number'])) # must use unmogrified keys
-        except KeyError, e:
-            logging.error("Keyerrore=%s" %  e)
-            import pdb; pdb.set_trace()
+        logging.info("APP %d: %s %s" % (
+                num_apps, row['Acronym'], row['Version Number'])) # must use unmogrified keys
         app = App()
         app.save()                  # save for M2M
         for k, v in row.items():
             if k in UNUSED_FIELDS:
                 continue
-            # MAYBE TODO: filter nulls from M2M, check nullish
             v = v.strip()
             if not v:           # don't store empty values
                 continue
+            # MAYBE TODO: filter nulls from M2M, check nullish
             # MAYBE TODO: transform Date, Time, Boolean, Integer
-            try: 
+            try:
                 setattr(app, mogrify(k), v)
             except (TypeError, ValidationError), e:
                 logging.error("SETATTR: %s", e)

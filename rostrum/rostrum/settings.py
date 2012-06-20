@@ -135,8 +135,8 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     # Our app: (FOR NOW, need rostrum.app for syncdb, 'app' for import
         #
-    #'rostrum.app',
-    'app',
+    'rostrum.app',
+    #'app',
     'bootstrapform',
 )
 
