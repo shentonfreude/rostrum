@@ -4,102 +4,78 @@
 
 Pulled from ROSA STRAW Crosswalk exported as CSV.
 
+Administrative, Compliance, Descriptive, Technical.
+
 We probably will need to parse this programmatically as it's unlikely
 to be fixed in stone.
 
-Administrative
-==============
+Administrative	Application Type
+Administrative	Application Type - Previous
+Administrative	HITSS Supported
+Administrative	HITSS Supported - Previous
+Administrative	Number of Users
+Administrative	Number of Users - Previous
+Administrative	Project Manager Name
+Administrative	Project Manager Name - Previous
+Administrative	Service Request Class(s)
+Administrative	Service Request Class(s) - Previous
+Administrative	Service Request Numbers
+Administrative	Service Request Numbers - Previous
+Administrative	Support Class
+Administrative	Support Class - Previous
 
-Application Type
-Branch Manager Name
-Contract Task Order Numbers
-Contractor/ Civil Servant Managed Records
-Developer-Alternate
-Developer-Primary
-HITSS Supported
-IT&CD Security Owner Name
-NASA Analyst Name
-NASA Owner Name
-NASA Owner Org Code
-NASA Owner Organization Name
-NASA Requestor
-Number of Users
-OTS Supplier Contact Information
-OTS Supplier Org Name
-Project Manager Name
-Service Request Class(s)
-Service Request Numbers
-Support Class
-Tier Transfer Level
+Compliance	Compliance - 508
+Compliance	Compliance - 508 - Previous
+Compliance	Data Impact Type
+Compliance	Data Impact Type - Previous
+Compliance	FIPS Information Category
+Compliance	FIPS Information Category - Previous
+Compliance	Security Plan Number
+Compliance	Security Plan Number - Previous
 
-Compliance
-==========
+Description	Acronym
+Description	Acronym - Previous
+Description	Description
+Description	Description - Previous
+Description	Name
+Description	Name - Previous
+Description	Software Class
+Description	Software Class - Previous
+Description	User Groups
+Description	User Groups - Previous
+Description	Version Change Description
+Description	Version Change Description - Previous
+Description	Version Number
+Description	Version Number - Previous
 
-508 Compliance Review Date
-Application Data Impact Type
-AWRS Check List on File
-Compliance - 2810
-Compliance - 508
-Compliance - AWRS
-Federal Records Qualification
-Filed with Federal Registry
-Information Sensitivity
-NRR Item
-NRR Schedule
-NRRS Disposition
-NRRS Schedule/ Item
-Privacy Act System
-Privacy Info Data Types
-Privacy Info Indicator
-Security Plan Number
-Security Scan Date
-Server FIPS Information Category
-SORN - System of Records Notice Number
-SSN System
+Technical	Architecture Type
+Technical	Architecture Type - Previous
+Technical	DBMS Names and Version
+Technical	DBMS Names and Version - Previous
+Technical	Interface Acronym
+Technical	Interface Acronym - Previous
+Technical	Interface Direction
+Technical	Interface Direction - Previous
+Technical	Interface Method
+Technical	Interface Method - Previous
+Technical	Internal or External System
+Technical	Internal or External System - Previous
+Technical	Network Services Used
+Technical	Network Services Used - Previous
+Technical	Servers - Application
+Technical	Servers - Application - Previous
+Technical	Servers - Database
+Technical	Servers - Database - Previous
+Technical	Servers - Report
+Technical	Servers - Report - Previous
+Technical	Servers Location
+Technical	Servers Location - Previous
+Technical	Software Names and Versions
+Technical	Software Names and Versions - Previous
+Technical	URL Link
+Technical	URL Link - Previous
+Technical	Version Status
+Technical	Version Status - Previous
 
-Descriptive
-===========
+xxx	Comments
 
-Acronym
-Description
-Frequency Used
-Functional Types
-Name
-Release Notes
-Software Class
-User Groups
-Version Change Description
-Version Number
-
-Technical
-=========
-
-Authentication Type
-Confirmed Compatible Web Browser Versions
-DBMS Name and Version
-DBMS Name and Version - Other 
-Disposition Comments
-Firewall w/2 Factor Token Authentication
-Hosting Technology
-Interface Acronym
-Interface Acronym Direction Method
-Interface Direction
-Interface Method
-Internal or External System
-IP Address
-Network Services Used
-Production Application Server
-Production Database Server
-Production Report Server
-Release Date
-SEF Application Server
-SEF Database Server
-SEF Report Server
-Servers  Application
-Servers - Database
-Servers - Report
-Servers Location
-Software Names and Versions
-Software Names and Versions - Other
-URL Link
-Version Status
