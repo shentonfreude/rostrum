@@ -139,8 +139,11 @@ def _search_suggestions():
 
 def overview(request, acronym=None):
     # TODO? alphabin them
-    apps = App.objects.values('acronym', 'version_number', 'name', 'description', 'id',
-                              'architecture_type', 'number_of_users', 'service_request_numbers').order_by('acronym').distinct()
+    apps = App.objects.values('id', 'acronym', 'version_number',
+                              'name', 'description',
+                              'architecture_type', 'number_of_users',
+                              'service_request_numbers',
+                              'project_manager_name').order_by('acronym').distinct()
     return render_to_response('app/overview.html',
                               {'apps': apps,
                                'bootstrap_label': BOOTSTRAP_LABEL,

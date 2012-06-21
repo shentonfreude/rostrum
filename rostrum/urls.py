@@ -32,9 +32,9 @@ urlpatterns = patterns(
 
     # This is a hack to make the menu bar cog link work.
     # django/contrib/admin/sites.get_urls says ^$ is 'index' -- how to use?
-#    url(r'^admin$',             redirect_to, {'url': '/admin/'}, name='manage'),
+    url(r'^admin$',             redirect_to, {'url': '/admin/'}, name='manage'),
 
     # Uncomment the next line to enable the admin:
-#    url(r'^admin/',             include(admin.site.urls)),
+    url(r'^admin/',             include(admin.site.urls)),
 
 )
