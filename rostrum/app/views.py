@@ -138,40 +138,20 @@ def _search_suggestions():
 
 
 def overview(request, acronym=None):
-    # Query Application.objects.prefetch_related('app_status').\
-    #    values_list('acronym', flat=True).distinct().order_by('acronym') 
-    # took 5.2 seconds.
-    # Query attrs we want and reducing with dicts takes 0.03 seconds, 173x speedup. :-)
-    logging.warning("overview acronym=%s" % acronym)
-    if not acronym:
-        apps = App.objects.values('acronym', 'version_number', 'name', 'description', 'id',
-                                  'architecture_type', 'number_of_users', 'service_request_numbers').order_by('acronym').distinct()
-        return render_to_response('app/overview.html',
-                                  {'apps': apps,
-                                   'bootstrap_label': BOOTSTRAP_LABEL,
-                                   'search_suggestions': _search_suggestions(),
-                                   },
-                                  context_instance=RequestContext(request));
-    apps = App.objects.filter(acronym__iexact=acronym).order_by('acronym', 'version_number')
-    return render_to_response('application/search_results.html',
-                              {'object_list': apps,
+    # TODO? alphabin them
+    apps = App.objects.values('acronym', 'version_number', 'name', 'description', 'id',
+                              'architecture_type', 'number_of_users', 'service_request_numbers').order_by('acronym').distinct()
+    return render_to_response('app/overview.html',
+                              {'apps': apps,
                                'bootstrap_label': BOOTSTRAP_LABEL,
                                'search_suggestions': _search_suggestions(),
                                },
                               context_instance=RequestContext(request));
 
 def details(request, id):
-    """Return full application.
-    Also show all other release versions for context.
+    """Return full application attrs.
     """
     app = App.objects.get(pk=id)
-    # app_class = BOOTSTRAP_LABEL.get(app.app_status.all()[0].name, '') # all()[0] for bogus M2M
-    # rels = Application.objects.filter(acronym=app.acronym).values('id', 'release', 'app_status__name').order_by('release').distinct() # worthless 'distinct'
-    # releases = []
-    # Is there a away to do this to 'rels' in place, or with a comprehension?
-    # for rel in rels:
-    #     rel.update({'app_class': BOOTSTRAP_LABEL.get(rel.pop('app_status__name'))})
-    #     releases.append(rel)
     return render_to_response('app/details.html',
                               {'app': app,
                                # 'app_class': app_class,
@@ -181,50 +161,29 @@ def details(request, id):
                                },
                               context_instance=RequestContext(request));
 
+# For category views, get all attrs for all apps, render to specific templates.
+# Less effiencient perhaps but easier coding, especially with _previous vals
 
+def administrative(request):
+    # TODO? alphabin them
+    apps = App.objects.all().order_by('acronym').distinct()
+    return render_to_response('app/administrative.html',
+                              {'apps': apps,
+                               'bootstrap_label': BOOTSTRAP_LABEL,
+                               'search_suggestions': _search_suggestions(),
+                               },
+                              context_instance=RequestContext(request));
 
-# def list_apps(request):
-#     return render_to_response('list_apps.html',
-#                               {'apps': Application.objects.all().order_by('acronym', 'release'),
-#                                },
-#                               context_instance=RequestContext(request));
+def compliance(request):
+    # TODO? alphabin them
+    apps = App.objects.all().order_by('acronym').distinct()
+    return render_to_response('app/compliance.html',
+                              {'apps': apps,
+                               'bootstrap_label': BOOTSTRAP_LABEL,
+                               'search_suggestions': _search_suggestions(),
+                               },
+                              context_instance=RequestContext(request));
 
-# def application_versions(request):
-#     """Return sorted list of Arco and Versions
-#     ['Acro': [<appv1>, <appv2>, ...], 'Zeta':[<apps>...]]
-#     Render like:
-#     BESS  1.1, 1.2, 2.1
-#     CATS  2.0, 2.3, 2.4
-#     alphabin={'A' : [{'AIIS': {'id': 1, 'release': '3.14', app_status__name='Prior'},
-#                               {'id': 2, 'release': '3.15', app_status__name='Current'},
-#                       'ARDVARK' : ...,
-#                      }],
-#               'B' : ...}
-#     Doing query for acros, then queries for release status,
-#     without prefetch: 2.7 seconds, with: 1.8
-#     Doing a single limited query of just the attrs we need: 0.05 seconds.
-#     """
-#     # Why is this getting a single app_status since it's M2M currently?
-#     apps = Application.objects.values('id', 'acronym', 'release', 'app_status__name').order_by('acronym', 'release')
-#     acro_vers = OrderedDict()
-#     for app in apps:
-#         acro = app.pop('acronym')
-#         if not acro in acro_vers:
-#             acro_vers[acro] = []
-#         app['app_class'] = BOOTSTRAP_LABEL.get(app.pop('app_status__name'), '')
-#         acro_vers[acro].append(app)
-#     alphabin = OrderedDict()
-#     for acro, releases in acro_vers.items():
-#         c = acro[0].upper()
-#         if c not in alphabin:
-#             alphabin[c] = []
-#         alphabin[c].append((acro, releases))
-#     return render_to_response('application/application_versions.html',
-#                               {'bootstrap_label': BOOTSTRAP_LABEL,
-#                                'alphabin': alphabin,
-#                                'search_suggestions': _search_suggestions(),
-#                                },
-#                               context_instance=RequestContext(request));
 
 
 # def search(request):
@@ -262,50 +221,4 @@ def details(request, id):
 #                                },
 #                               context_instance=RequestContext(request));
 
-
-# def report(request):
-#     """Show page offering different reports. Boring.
-#     """
-#     return render_to_response('application/report.html',
-#                               {'search_suggestions': _search_suggestions(),
-#                                },
-#                               context_instance=RequestContext(request));
-
-# def report_current(request):
-#     """Show page offering different reports. Boring.
-#     """
-#     apps = Application.objects.filter(app_status__name__icontains='Current').order_by('acronym', 'release')
-#     return render_to_response('application/search_results.html',
-#                               {'object_list': apps,
-#                                'search_suggestions': _search_suggestions(),
-#                                },
-#                               context_instance=RequestContext(request));
-
-# def report_development(request):
-#     """Show page offering different reports. Boring.
-#     """
-#     apps = Application.objects.filter(app_status__name__icontains='Development').order_by('acronym', 'release')
-#     return render_to_response('application/search_results.html',
-#                               {'object_list': apps,
-#                                'search_suggestions': _search_suggestions(),
-#                                },
-#                               context_instance=RequestContext(request));
-
-# def report_development(request):
-#     """Actual, Projected, In-Suspense and TBD [wtf?]"
-#     rel date, release, acro, sr#, org acro, nasa requester, change description
-#     TODO: don't understand the status selection meanings above. Our choices:
-#     Cancelled, Archived, Prior Version, Current Version, Moved, Inactive,
-#     Roll Back, In Suspense, Unassigned, In Development.
-#     """
-#     q =     Q(app_status__name__iequals='Current Version') # actual?
-#     q = q | Q(app_status__name__iequals='In Development')  # projected?
-#     q = q | Q(app_status__name__iequals='In Suspense')     # supense
-#     q = q | Q(app_status__name__iequals='Unassigned')      # TBD?
-#     apps = Application.objects.filter(q).values('release_date', 'release', 'acronym', 'sr_number', 'owner_org', 'nasa_requester', 'release_change_description', 'app_status__name').order_by('release_date', 'acronym', 'release')
-#     return render_to_response('report/app_pipeline_abbrev.html',
-#                               {'object_list': apps,
-#                                'search_suggestions': _search_suggestions(),
-#                                },
-#                               context_instance=RequestContext(request));
 

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}{{app.acronym}} {{app.release|default:"[No#]"}} [ROSA]{% endblock %}
+
+{% block leftnav %}
+<li class="nav-header">Quick jump...</li>
+<li><a href="#comments">Comments</a></li>
+<li><a href="#administrative">Administrative</a></li>
+<li><a href="#compliance">Compliance</a></li>
+<li><a href="#descriptive">Descriptive</a></li>
+<li><a href="#technical">Technical</a></li>
+{% endblock %}
+
+{% block content %}
+<h1>Administrative</h1>
+
+
+<table class="table">
+
+  <thead>
+    <tr>
+      <th>Acronym</th>
+      <th>Version</th>
+
+      <th>Application Type              </th>
+      <th>HITSS Supported               </th>
+      <th>Number of Users               </th>
+      <th>Project Manager Name          </th>
+      <th>Service Request Class(s)      </th>
+      <th>Service Request Numbers       </th>
+      <th>Support Class                 </th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for app in apps %}
+    <tr>
+      <td><a href="{% url app_details id=app.id %}">{{app.acronym}}</a></td>
+      <td><a href="{% url app_details id=app.id %}">{{app.version_number|default:"[No#]"}}</a></td>
+
+      <td>{{app.application_type                 }}<div class="previous">{{app.application_type_previous|default_if_none:""           }}</div></td>
+      <td>{{app.hitss_supported                  }}<div class="previous">{{app.hitss_supported_previous|default_if_none:""            }}</div></td>
+      <td>{{app.number_of_users                  }}<div class="previous">{{app.number_of_users_previous|default_if_none:""            }}</div></td>
+      <td>{{app.project_manager_name             }}<div class="previous">{{app.project_manager_name_previous|default_if_none:""       }}</div></td>
+      <td>{{app.service_request_classs           }}<div class="previous">{{app.service_request_classs_previous|default_if_none:""     }}</div></td>
+      <td>{{app.service_request_numbers          }}<div class="previous">{{app.service_request_numbers_previous|default_if_none:""     }}</div></td>
+      <td>{{app.support_class                    }}<div class="previous">{{app.support_class_previous|default_if_none:""              }}</div></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+
+</table>
+
+
+{% endblock %}
+

@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}{{app.acronym}} {{app.release|default:"[No#]"}} [ROSA]{% endblock %}
+
+{% block leftnav %}
+<li class="nav-header">Quick jump...</li>
+<li><a href="#comments">Comments</a></li>
+<li><a href="#administrative">Administrative</a></li>
+<li><a href="#compliance">Compliance</a></li>
+<li><a href="#descriptive">Descriptive</a></li>
+<li><a href="#technical">Technical</a></li>
+{% endblock %}
+
+{% block content %}
+<h1>Compliance</h1>
+
+
+<table class="table">
+
+  <thead>
+    <tr>
+      <th>Acronym</th>
+      <th>Version</th>
+
+      <th>Compliance - 508              </th>
+      <th>Data Impact Type              </th>
+      <th>FIPS Information Category     </th>
+      <th>Security Plan Number          </th>
+    </tr>
+  </thead>
+
+
+
+
+  <tbody>
+    {% for app in apps %}
+    <tr>
+      <td><a href="{% url app_details id=app.id %}">{{app.acronym}}</a></td>
+      <td><a href="{% url app_details id=app.id %}">{{app.version_number|default:"[No#]"}}</a></td>
+
+      <td>{{app.compliance_508                   }}<div class="previous">{{app.compliance_508_previous|default_if_none:""             }}</div></dtd>
+      <td>{{app.data_impact_type                 }}<div class="previous">{{app.data_impact_type_previous|default_if_none:""           }}</div></td>
+      <td>{{app.fips_information_category        }}<div class="previous">{{app.fips_information_category_previous|default_if_none:""  }}</div></td>
+      <td>{{app.security_plan_number             }}<div class="previous">{{app.security_plan_number_previous|default_if_none:""       }}</div></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+
+</table>
+
+
+{% endblock %}
+
