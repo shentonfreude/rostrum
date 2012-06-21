@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Technical [ROSTRUM]{% endblock %}
+
+{% block content %}
+<h1>Technical</h1>
+
+
+<table class="table">
+
+  <thead>
+    <tr>
+      <th>Acronym</th>
+      <th>Version</th>
+
+      <th>Architecture Type             </th>
+      <th>DBMS Name and Version         </th>
+      <th>Interface Acronym             </th>
+      <th>Interface Direction           </th>
+      <th>Interface Method              </th>
+      <th>Internal or External System   </th>
+      <th>Network Services Used         </th>
+      <th>Servers - Application         </th>
+      <th>Servers - Database            </th>
+      <th>Servers - Report              </th>
+      <th>Servers Location              </th>
+      <th>Software Names and Versions   </th>
+      <th>URL Link                      </th>
+      <th>Version Status                </th>
+    </tr>
+  </thead>
+
+  {# TODO: interface_* are too wide, need to split on "," or ";" then make individual lines with <br> #}
+
+  <tbody>
+    {% for app in apps %}
+    <tr>
+      <td><a href="{% url app_details id=app.id %}">{{app.acronym}}</a></td>
+      <td><a href="{% url app_details id=app.id %}">{{app.version_number|default:"[No#]"}}</a></td>
+
+      <td>{{app.architecture_type                }}<div class="previous">{{app.architecture_type_previous|default_if_none:""          }}</div></td>
+      <td>{{app.dbms_names_and_version           }}<div class="previous">{{app.dbms_names_and_version_previous|default_if_none:""     }}</div></td>
+      <td>{{app.interface_acronym                }}<div class="previous">{{app.interface_acronym_previous|default_if_none:""          }}</div></td>
+      <td>{{app.interface_direction              }}<div class="previous">{{app.interface_direction_previous|default_if_none:""        }}</div></td>
+      <td>{{app.interface_method                 }}<div class="previous">{{app.interface_method_previous|default_if_none:""           }}</div></td>
+      <td>{{app.internal_or_external_system      }}<div class="previous">{{app.internal_or_external_system_previous|default_if_none:""}}</div></td>
+      <td>{{app.network_services_used.all        }}<div class="previous">{{app.network_services_used.all_previous|default_if_none:""  }}</div></td>
+      <td>{{app.servers_application              }}<div class="previous">{{app.servers_application_previous|default_if_none:""        }}</div></td>
+      <td>{{app.servers_database                 }}<div class="previous">{{app.servers_database_previous|default_if_none:""           }}</div></td>
+      <td>{{app.servers_report                   }}<div class="previous">{{app.servers_report_previous|default_if_none:""             }}</div></td>
+      <td>{{app.servers_location                 }}<div class="previous">{{app.servers_location_previous|default_if_none:""           }}</div></td>
+      <td>{{app.software_names_and_versions      }}<div class="previous">{{app.software_names_and_versions_previous|default_if_none:""}}</div></td>
+      <td><a href="{{app_url_link}}">{{app.url_link}}</a><div class="previous">{{app.url_link_previous|default_if_none:""             }}</div></td>
+      <td>{{app.version_status                   }}<div class="previous">{{app.version_status_previous|default_if_none:""             }}</div></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+
+</table>
+
+
+{% endblock %}
+

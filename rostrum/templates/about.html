@@ -6,20 +6,32 @@
 
 <h1>About ROSTRUM</h1>
 
-<p>The Repository of Supported Applications is a web application for
-browsing and querying information about NASA HQ applications,
-including application description, support team, security compliance,
-architecture and interface(s) for current applications, applications
-in development and archived applications. Key reports such as the
-Applications Pipeline and Release Planner are available to all
-authorized users as well as a sampling of graphic reports currently
-provided in the Application Monthly Review (AMR).</p>
+<p>Data about current apps is extracted from ROSA and loaded into a
+spreadsheet for cleanup and attribute wrangling. The spread makes
+visualizing the data -- before and after -- difficult.  This
+application provides views into that data including: Overview of all
+applications, Details of a specific Applicaiton, and details of
+attributes for all apps by category -- Administrative, Compliance,
+Description, Technical.</p>
+
+<p>The data maintained by ROSA, and hence ROSTRUM, is deemed sensitive
+so the app must be located in contractor or government servers.<p>
 
 <h1>What's New</h1>
+
+<h2>2012-06-21</h2>
+<ul>
+  <li>Administrative details view</li>
+  <li>Compliance details view</li>
+  <li>Description details view</li>
+  <li>Technical details view</li>
+  <li>Menubar icons work</li>
+</ul>
 
 <h2>2012-06-20</h2>
 <ul>
   <li>Applications overview (list) view working</li>
+  <li>Application deatails view working</li>
 </ul>
 
 <h2>2012-06-19</h2>
@@ -29,4 +41,23 @@ provided in the Application Monthly Review (AMR).</p>
   <li>Anti-feature: no editing, no export back to CSV -- CSV is canonical</li>
   <li>Stole much code (except import) from my ROSA implemenation from 2012-04-01</li>
 </ul>
+
+<h1>What's Missing</h1>
+<ul>
+  <li>Changes -- especially in attribute layout -- based on user feedback.
+  <li>Search</li>
+  <li>Uploading CSV exported from spreadsheet from within the app;
+  currently this is done with a standalone 'importcsv.py'
+  command.</li>
+  <li>Details and Technical pages have "Interface *" columns that are
+  too wide for apps which list these without spaces: the HTML engine
+  can't split the text into multiple lines to fit a cell.</li>
+  <li>Editing ability: perhaps we can do this through Django's Admin
+  UI, grouping attributes by their categories for easier
+  reveal/conceal. But then we have to export, and then the spread is
+  no longer canonical data.</li>
+  <li>Make tables sortable</li>
+    
+</ul>
+
 {% endblock %}

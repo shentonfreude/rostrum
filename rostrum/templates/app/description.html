@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Description [ROSTRUM]{% endblock %}
+
+{% block content %}
+<h1>Description</h1>
+
+<table class="table">
+
+  <thead>
+    <tr>
+      <th>Acronym</th>
+      <th>Version</th>
+
+      <th>Description                   </th>
+      <th>Name                          </th>
+      <th>Software Class                </th>
+      <th>User Groups                   </th>
+      <th>Version Change Description    </th>
+    </tr>
+  </thead>
+
+
+
+  <tbody>
+    {% for app in apps %}
+    <tr>
+      <td><a href="{% url app_details id=app.id %}">{{app.acronym}}</a></td>
+      <td><a href="{% url app_details id=app.id %}">{{app.version_number|default:"[No#]"}}</a></td>
+
+      <td>{{app.description                      }}<div class="previous">{{app.description_previous|default_if_none:""                       }}</div></td>
+      <td>{{app.name                             }}<div class="previous">{{app.name_previous|default_if_none:""                       }}</div></td>
+      <td>{{app.software_class                   }}<div class="previous">{{app.software_class_previous|default_if_none:""             }}</div></td>
+      <td>{{app.user_groups                      }}<div class="previous">{{app.user_groups_previous|default_if_none:""                }}</div></td>
+      <td>{{app.version_change_description       }}<div class="previous">{{app.version_change_description_previous|default_if_none:"" }}</div></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+
+</table>
+
+
+{% endblock %}
+

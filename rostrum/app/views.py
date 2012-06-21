@@ -184,6 +184,26 @@ def compliance(request):
                                },
                               context_instance=RequestContext(request));
 
+def description(request):
+    # TODO? alphabin them
+    apps = App.objects.all().order_by('acronym').distinct()
+    return render_to_response('app/description.html',
+                              {'apps': apps,
+                               'bootstrap_label': BOOTSTRAP_LABEL,
+                               'search_suggestions': _search_suggestions(),
+                               },
+                              context_instance=RequestContext(request));
+
+def technical(request):
+    # TODO? alphabin them
+    apps = App.objects.all().order_by('acronym').distinct()
+    return render_to_response('app/technical.html',
+                              {'apps': apps,
+                               'bootstrap_label': BOOTSTRAP_LABEL,
+                               'search_suggestions': _search_suggestions(),
+                               },
+                              context_instance=RequestContext(request));
+
 
 
 # def search(request):
