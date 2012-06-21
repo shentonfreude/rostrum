@@ -144,7 +144,8 @@ def overview(request, acronym=None):
     # Query attrs we want and reducing with dicts takes 0.03 seconds, 173x speedup. :-)
     logging.warning("overview acronym=%s" % acronym)
     if not acronym:
-        apps = App.objects.values('acronym', 'version_number', 'name', 'description', 'id').order_by('acronym').distinct()
+        apps = App.objects.values('acronym', 'version_number', 'name', 'description', 'id',
+                                  'architecture_type', 'number_of_users', 'service_request_numbers').order_by('acronym').distinct()
         return render_to_response('app/overview.html',
                                   {'apps': apps,
                                    'bootstrap_label': BOOTSTRAP_LABEL,

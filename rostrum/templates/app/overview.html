@@ -25,6 +25,9 @@
     <tr>
       <th>Acronym</th>
       <th>Version</th>
+      <th>Architecture</th>
+      <th>Users</th>
+      <th>SR</th>
       <th>Name</th>
       <th>Description</th>
     </tr>
@@ -33,16 +36,13 @@
   <tbody>
     {% for app in apps %}
     <tr>
-      <td>{{app.acronym}}</td>
-      <td><a class="{{acronym_class}}"
-             href="{% url app_details id=app.id %}">
-          {{app.version_number|default:"[No#]"}}
-        </a>
-      </td>
-
+      <td><a href="{% url app_details id=app.id %}">{{app.acronym}}</a></td>
+      <td><a href="{% url app_details id=app.id %}">{{app.version_number|default:"[No#]"}}</a></td>
+      <td>{{app.architecture_type}}</td>
+      <td>{{app.number_of_users}}</td>
+      <td>{{app.service_request_numbers}}</td>
       <td>{{app.name}}</td>
       <td>{{app.description}}</td>
-      <td>{{app.id}}</td>
     </tr>
     {% endfor %}
 
