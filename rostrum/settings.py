@@ -1,13 +1,14 @@
 # Django settings for rostrum project.
-import os 
-import logging 
+import os
+import logging
+
+logging.basicConfig(level=logging.INFO) # needs to be in settings, not in import, views
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-
 PROJECT_PATH = os.path.abspath(os.path.split(__file__)[0])
-logging.warning("settings.py: PROJECT_PATH=%s" % PROJECT_PATH)
+logging.info("settings.py: PROJECT_PATH=%s" % PROJECT_PATH)
 
 ADMINS = (
     ('Chris Shenton', 'chris.shenton@nasa.gov'),
@@ -27,7 +28,7 @@ DATABASES = {
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
-logging.warning("settings.py: DATABASES=%s" % DATABASES)
+logging.info("settings.py: DATABASES=%s" % DATABASES)
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name

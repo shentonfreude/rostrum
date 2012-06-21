@@ -17,8 +17,6 @@ from django.db.models.fields import FieldDoesNotExist
 
 from app.models import App
 
-logging.basicConfig(level=logging.INFO)
-
 UNUSED_FIELDS = (
     'no',
     )
@@ -70,12 +68,24 @@ def mogrify(txt):
 
 model = models.get_model('app', 'App')
 
+App.objects.all().delete()      # DANGER: Delete existing apps info
+
 with open(sys.argv[1], 'rb') as f:
     reader = csv.DictReader(f)
     num_apps = 0
-    for row in reader:
-        logging.info("APP %d: %s %s" % (
-                num_apps, row['Acronym'], row['Version Number'])) # must use unmogrified keys
+    for rid, row in enumerate(reader):
+        acronym = row['Acronym'].strip()
+        version = row['Version Number'].strip()
+        if acronym == '':
+            logging.warning("Ignoring row=%d without Acronym" % rid)
+            continue
+        if len(acronym) < 2:
+            logging.warning("Ignoring row=%d with too-short Acronym=%s" % (rid, acronym))
+            continue
+        existing = App.objects.filter(acronym__iexact=acronym, version_number=version)
+        if existing:
+            logging.warning("Ignoring extant acronym=%s version=%s" % (acronym, version))
+            continue
         app = App()
         app.save()                  # save for M2M
         for k, v in row.items():
@@ -96,3 +106,6 @@ with open(sys.argv[1], 'rb') as f:
         except (TypeError, ValidationError), e:
                 logging.error("SAVE: %s", e)
                 import pdb; pdb.set_trace()
+        logging.info("Row=%d App=%d: %s %s" % (rid, num_apps, acronym, version))
+        num_apps += 1
+
