@@ -1,12 +1,22 @@
 {% extends "base.html" %}
 
+{% block extrascript %}
+<script>
+  $(document).ready(function()
+    {
+        $("#resultsTable").tablesorter();
+    }
+);
+</script>
+{% endblock %}
+
 {% block title %}Administrative [ROSTRUM]{% endblock %}
 
 {% block content %}
 <h1>Administrative</h1>
 
 
-<table class="table">
+<table id="resultsTable" class="table tablesorter">
 
   <thead>
     <tr>

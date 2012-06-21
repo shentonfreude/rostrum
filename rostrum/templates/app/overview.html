@@ -1,11 +1,22 @@
 {% extends "base.html" %}
 
+{% block extrascript %}
+<script>
+  $(document).ready(function()
+    {
+        $("#resultsTable").tablesorter();
+    }
+);
+</script>
+{% endblock %}
+
+
 {% block content %}
 <h1>Applications Overview</h1>
 
 <p>Acronyms and basic features of all Applications are given here. Click on one for details.</p>
 
-<table class="table">
+<table id="resultsTable" class="table tablesorter">
 
   <thead>
     <tr>
