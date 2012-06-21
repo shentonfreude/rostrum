@@ -41,20 +41,20 @@
   <div class="span6">
     <h2 id="technical">Technical</h2>
     <dl>
+      <dt>Version Status                </dt><dd>{{app.version_status                   }}</dd><dd class="previous">{{app.version_status_previous|default_if_none:""             }}</dd>
       <dt>Architecture Type             </dt><dd>{{app.architecture_type                }}</dd><dd class="previous">{{app.architecture_type_previous|default_if_none:""          }}</dd>
+      <dt>Network Services Used         </dt><dd>{{app.network_services_used            }}</dd><dd class="previous">{{app.network_services_used_previous|default_if_none:""  }}</dd>
+      <dt>Software Names and Versions   </dt><dd>{{app.software_names_and_versions      }}</dd><dd class="previous">{{app.software_names_and_versions_previous|default_if_none:""}}</dd>
       <dt>DBMS Name and Version         </dt><dd>{{app.dbms_names_and_version           }}</dd><dd class="previous">{{app.dbms_names_and_version_previous|default_if_none:""     }}</dd>
-      <dt>Interface Acronym             </dt><dd>{{app.interface_acronym                }}</dd><dd class="previous">{{app.interface_acronym_previous|default_if_none:""          }}</dd>
-      <dt>Interface Direction           </dt><dd>{{app.interface_direction              }}</dd><dd class="previous">{{app.interface_direction_previous|default_if_none:""        }}</dd>
-      <dt>Interface Method              </dt><dd>{{app.interface_method                 }}</dd><dd class="previous">{{app.interface_method_previous|default_if_none:""           }}</dd>
-      <dt>Internal or External System   </dt><dd>{{app.internal_or_external_system      }}</dd><dd class="previous">{{app.internal_or_external_system_previous|default_if_none:""}}</dd>
-      <dt>Network Services Used         </dt><dd>{{app.network_services_used.all        }}</dd><dd class="previous">{{app.network_services_used.all_previous|default_if_none:""  }}</dd>
       <dt>Servers - Application         </dt><dd>{{app.servers_application              }}</dd><dd class="previous">{{app.servers_application_previous|default_if_none:""        }}</dd>
       <dt>Servers - Database            </dt><dd>{{app.servers_database                 }}</dd><dd class="previous">{{app.servers_database_previous|default_if_none:""           }}</dd>
       <dt>Servers - Report              </dt><dd>{{app.servers_report                   }}</dd><dd class="previous">{{app.servers_report_previous|default_if_none:""             }}</dd>
       <dt>Servers Location              </dt><dd>{{app.servers_location                 }}</dd><dd class="previous">{{app.servers_location_previous|default_if_none:""           }}</dd>
-      <dt>Software Names and Versions   </dt><dd>{{app.software_names_and_versions      }}</dd><dd class="previous">{{app.software_names_and_versions_previous|default_if_none:""}}</dd>
+      <dt>Internal or External System   </dt><dd>{{app.internal_or_external_system      }}</dd><dd class="previous">{{app.internal_or_external_system_previous|default_if_none:""}}</dd>
+      <dt>Interface Acronym             </dt><dd>{{app.interface_acronym                }}</dd><dd class="previous">{{app.interface_acronym_previous|default_if_none:""          }}</dd>
+      <dt>Interface Direction           </dt><dd>{{app.interface_direction              }}</dd><dd class="previous">{{app.interface_direction_previous|default_if_none:""        }}</dd>
+      <dt>Interface Method              </dt><dd>{{app.interface_method                 }}</dd><dd class="previous">{{app.interface_method_previous|default_if_none:""           }}</dd>
       <dt>URL Link                      </dt><dd><a href="{{app_url_link}}">{{app.url_link}}</a></dd><dd class="previous">{{app.url_link_previous|default_if_none:""             }}</dd>
-      <dt>Version Status                </dt><dd>{{app.version_status                   }}</dd><dd class="previous">{{app.version_status_previous|default_if_none:""             }}</dd>
     </dl>
   </div>
 </div>
