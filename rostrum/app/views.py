@@ -87,6 +87,7 @@ def details(request, id):
     app = App.objects.get(pk=id)
     return render_to_response('app/details.html',
                               {'app': app,
+                               'edit_url': reverse('admin:app_app_change', args=(id,)),
                                # 'app_class': app_class,
                                # 'releases': releases,
                                'bootstrap_label': BOOTSTRAP_LABEL,

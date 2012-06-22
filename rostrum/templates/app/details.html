@@ -14,6 +14,7 @@
 {% block content %}
 <h1>Details: {{app.acronym}} {{app.version_number|default:"[No#]"}}</h1>
 
+<p><a href="{{edit_url}}">Edit details for {{app.acronym}} {{app.version_number}}</a></p>
 
 <div class="row-fluid well">
   <div class="span12">
