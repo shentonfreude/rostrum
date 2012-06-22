@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% load bootstrap %}
+
+{% block title %}Upload CSV [ROSTRUM]{% endblock %}
+
+{% block content %}
+<h1>Upload CSV</h1>
+
+
+{% if form %}
+<p>Upload a CSV file exported from the spreadsheet containing
+application acronyms, versions, etc.  The data is loaded into the database used by this applicaiton.
+</p>
+
+<p>We look for specific names so if you change the column labels, this
+code will break.</p>
+
+<p>DANGER: All previous data loaded into this application's database
+will be erased before loading in the new data.</p>
+
+<!-- To customize form UI see https://docs.djangoproject.com/en/dev/topics/forms/ -->
+
+<form method="POST"
+      action="."
+      enctype="multipart/form-data"
+      id="uploadcsv"
+      class="well form-horizontal">
+  {% csrf_token %}
+  <table>
+  {# form.as_p #} <!-- also: as_table, as_p, as_ul -->
+  {{ form|bootstrap }}
+  </table>
+  </br>
+  <button type="submit" class="btn btn-primary">
+    <i class="icon-upload icon-white"></i>
+    Upload</button>
+</form>
+
+{% else %}
+
+<h2>Upload Results</h2>
+
+<h3>Warnings</h3>
+<ul>
+  {% for warning in warnings %}
+  <li>{{warning}}</li>
+  {% endfor %}
+</ul>
+
+<h3>Info</h3>
+<ul>
+  {% for info in infos %}
+  <li>{{info}}</li>
+  {% endfor %}
+</ul>
+
+{% endif %}
+
+{% endblock %}

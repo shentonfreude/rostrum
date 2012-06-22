@@ -3,11 +3,13 @@ import logging
 import time
 import json
 from collections import OrderedDict
+import csv
 
 from django.core.context_processors import csrf
+from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from django.db.models import Q
-from django.forms import Form, CharField, DateField, ModelMultipleChoiceField
+from django.forms import Form, CharField, FileField, DateField, ModelMultipleChoiceField
 from django.forms import SelectMultiple
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
@@ -38,78 +40,6 @@ BOOTSTRAP_LABEL = {                                # underscore names for templa
     "Roll_Back"         : "",
     "Unassigned"        : "label label-warning",   # yellow
 }
-
-###############################################################################
-# Attributes
-
-# acronym
-# acronym_previous
-# application_type
-# application_type_previous
-# architecture_type
-# architecture_type_previous
-# comments
-# compliance_508
-# compliance_508_previous
-# data_impact_type
-# data_impact_type_previous
-# dbms_names_and_version
-# dbms_names_and_version_previous
-# description
-# description_previous
-# fips_information_category
-# fips_information_category_previous
-# hitss_supported
-# hitss_supported_previous
-# id
-# interface_acronym
-# interface_acronym_previous
-# interface_direction
-# interface_direction_previous
-# interface_method
-# interface_method_previous
-# internal_or_external_system
-# internal_or_external_system_previous
-# name
-# name_previous
-# network_services_used
-# network_services_used_previous
-# number_of_users
-# number_of_users_previous
-# project_manager_name
-# project_manager_name_previous
-# security_plan_number
-# security_plan_number_previous
-# servers_application
-# servers_application_previous
-# servers_database
-# servers_database_previous
-# servers_location
-# servers_location_previous
-# servers_report
-# servers_report_previous
-# service_request_classs
-# service_request_classs_previous
-# service_request_numbers
-# service_request_numbers_previous
-# software_class
-# software_class_previous
-# software_names_and_versions
-# software_names_and_versions_previous
-# support_class
-# support_class_previous
-# url_link
-# url_link_previous
-# user_groups
-# user_groups_previous
-# version_change_description
-# version_change_description_previous
-# version_number
-# version_number_previous
-# version_status
-# version_status_previous
-
-# BUG? Now 'owner' info in DB? 
 
 # TODO: memoize this
 def _search_suggestions():
@@ -208,6 +138,81 @@ def technical(request):
                               context_instance=RequestContext(request));
 
 
+def _mogrify(txt):
+    """Transform label names to be pythonic attribute-friendly.
+    """
+    return txt.lower().replace(" - ", "_").replace(" ", "_").replace("-", "_").replace("(", "").replace(")", "").replace(".", "")
+
+
+def _csv_to_db(csvfile):
+    App.objects.all().delete()      # DANGER: Delete existing apps info
+    reader = csv.DictReader(csvfile)
+    num_apps = 0
+    warnings = []
+    infos = []
+    for rid, row in enumerate(reader):
+        acronym = row['Acronym'].strip()
+        version = row['Version Number'].strip()
+        if acronym == '':
+            msg = "Ignoring row=%d without Acronym" % rid
+            warnings.append(msg)
+            logging.warning(msg)
+            continue
+        if len(acronym) < 2:
+            msg = "Ignoring row=%d with too-short Acronym=%s" % (rid, acronym)
+            warnings.append(msg)
+            logging.warning(msg)
+            continue
+        existing = App.objects.filter(acronym__iexact=acronym, version_number=version)
+        if existing:
+            msg = "Ignoring extant acronym=%s version=%s" % (acronym, version)
+            warnigns.append(msg)
+            logging.warning(msg)
+            continue
+        app = App()
+        app.save()                  # save for M2M
+        for k, v in row.items():
+            v = v.strip()
+            if not v:           # don't store empty values
+                continue
+            # MAYBE TODO: filter nulls from M2M, check nullish
+            # MAYBE TODO: transform Date, Time, Boolean, Integer
+            try:
+                setattr(app, _mogrify(k), v)
+            except (TypeError, ValidationError), e:
+                logging.error("SETATTR: %s", e)
+                import pdb; pdb.set_trace()
+        try:
+            app.save()
+        except (TypeError, ValidationError), e:
+                logging.error("SAVE: %s", e)
+                import pdb; pdb.set_trace()
+        msg = "Row=%d App=%d: %s %s" % (rid, num_apps, acronym, version)
+        infos.append(msg)
+        logging.info(msg)
+        num_apps += 1
+    return {'warnings': warnings, 'infos': infos}
+
+class UploadCsvForm(Form):
+    file = FileField()
+
+def uploadcsv(request):
+    """Upload a CSV file exported from spreadsheet, parse into DB.
+    """
+    if request.method == 'POST':
+        form = UploadCsvForm(request.POST, request.FILES)
+        if form.is_valid():
+            res = _csv_to_db(request.FILES['file'])
+            return render_to_response('app/uploadcsv.html',
+                                      {'warnings': res['warnings'],
+                                       'infos': res['infos'],
+                                       },
+                                      context_instance=RequestContext(request));
+    else:
+        form = UploadCsvForm()
+    return render_to_response('app/uploadcsv.html',
+                              {'form': form},
+                              context_instance=RequestContext(request));
 
 # def search(request):
 #     """Search common fields for substring match:
