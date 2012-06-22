@@ -71,4 +71,4 @@ class App(Model):
     version_status_previous              = CharField(max_length=128, blank=True, null=True)
 
     def __unicode__(self):
-        return u'%s-%s' % (self.acronym, self.version_number)
+        return u'(%s) %s-%s' % (self.project_manager_name, self.acronym, self.version_number)
