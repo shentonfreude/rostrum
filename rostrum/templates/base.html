@@ -56,7 +56,7 @@
               <li><a href="{% url app_description       %}"><i class="icon-white icon-th"></i>          Description</a></li>
               <li><a href="{% url app_technical         %}"><i class="icon-white icon-th"></i>          Technical</a></li>
               <li><a href="{% url app_uploadcsv         %}"><i class="icon-white icon-upload"></i>      Upload CSV</a></li>
-              <li><a href="{% url admin:app_app_changelist %}"><i class="icon-white icon-cog"></i>      Manage</a></li>
+              <li><a href="{% url admin:app_app_changelist %}"><i class="icon-white icon-edit"></i>     Edit Apps</a></li>
               <li><a href="{% url about                 %}"><i class="icon-white icon-info-sign"></i>   About</a></li>
             </ul>
             {#<p class="navbar-text pull-right"> <i class="icon-white icon-user"></i>      Logged in as <a href="#">username</a></p>#}
@@ -71,17 +71,17 @@
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
               {% block leftsearch %}
-              <form action="{# url search %}" method="POST">
+              <form action="{% url search %}" method="POST">
                 {% csrf_token %}
                 <input id="searchbox"
                        data-provider="typeahead"
                        type="text"
                        name="text"
                        class="input-medium search-query"
-                       placeholder="acronym, person, name, description, ..."
+                       placeholder="acro, name, mgr"
                        style="width:70%" /> {# HACK: what's a better way? 90% for normal square box #}
                 <br/>
-                <button type="submit" class="btn">Quick Search <i class="icon icon-search"></i></button>
+                <button type="submit" class="btn">Search <i class="icon icon-search"></i></button>
               </form>
               {% endblock %} {# leftnav #}
               {% block leftnav %}

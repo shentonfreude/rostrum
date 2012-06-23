@@ -1,18 +1,13 @@
-
+import csv
+import json
 import logging
 import time
-import json
-from collections import OrderedDict
-import csv
 
-from django.core.context_processors import csrf
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from django.db.models import Q
-from django.forms import Form, CharField, FileField, DateField, ModelMultipleChoiceField
-from django.forms import SelectMultiple
-from django.http import HttpResponseRedirect
-from django.shortcuts import render_to_response
+from django.forms import Form, CharField, FileField
+from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 
 from models import App
@@ -20,54 +15,9 @@ from models import App
 logging.basicConfig(level=logging.INFO)
 
 
-class SearchForm(Form):
-    text   = CharField(max_length=80, required=True)
-
-BOOTSTRAP_LABEL = {                                # underscore names for template access
-    "Archived"          : "label",                 # gray
-    "Cancelled"         : "label label-inverse",   # black
-    "Current Version"   : "label label-success",   # green
-    "Current_Version"   : "label label-success",   # green
-    "In Development"    : "label label-info",      # blue
-    "In_Development"    : "label label-info",      # blue
-    "In Suspense"       : "label label-important", # red
-    "In_Suspense"       : "label label-important", # red
-    "Inactive"          : "",
-    "Moved"             : "",
-    "Prior Version"     : "",
-    "Prior_Version"     : "",
-    "Roll Back"         : "",
-    "Roll_Back"         : "",
-    "Unassigned"        : "label label-warning",   # yellow
-}
-
-# TODO: memoize this
-def _search_suggestions():
-    """Provide suggestions to the search box.
-    Takes 0.06 seconds for this query and reduction.
-    TODO: provide this on *every* view since the box is there.
-    How to pull this request from Django template?
-    """
-    now = time.time()
-    words_q = App.objects.values('acronym',
-                                 'name', 'project_manager_name',
-                                 ).distinct()
-                                         # 'owner', 'owner_org',
-                                         # 'nasa_off_name', 'nasa_requester',
-                                         # 'manager_app_development', 'manager_project',
-                                         # 'dev_name_primary', 'dev_name_alternate').distinct()
-    wordset = set()
-    for worddict in words_q:
-        vals = worddict.values()
-        for val in vals:
-            wordset.add(val)
-    words = [word for word in wordset if word]
-    words.sort()
-    logging.info("search_suggestions len=%d time=%f" % (len(words), time.time() - now))
-    return json.dumps(words)
-
-
 def overview(request, acronym=None):
+    """List of all apps and a few attributes, allowing drill-down.
+    """
     # TODO? alphabin them
     apps = App.objects.values('id', 'acronym', 'version_number',
                               'name', 'description',
@@ -76,7 +26,6 @@ def overview(request, acronym=None):
                               'project_manager_name').order_by('acronym').distinct()
     return render_to_response('app/overview.html',
                               {'apps': apps,
-                               'bootstrap_label': BOOTSTRAP_LABEL,
                                'search_suggestions': _search_suggestions(),
                                },
                               context_instance=RequestContext(request));
@@ -88,9 +37,6 @@ def details(request, id):
     return render_to_response('app/details.html',
                               {'app': app,
                                'edit_url': reverse('admin:app_app_change', args=(id,)),
-                               # 'app_class': app_class,
-                               # 'releases': releases,
-                               'bootstrap_label': BOOTSTRAP_LABEL,
                                'search_suggestions': _search_suggestions(),
                                },
                               context_instance=RequestContext(request));
@@ -103,7 +49,6 @@ def administrative(request):
     apps = App.objects.all().order_by('acronym').distinct()
     return render_to_response('app/administrative.html',
                               {'apps': apps,
-                               'bootstrap_label': BOOTSTRAP_LABEL,
                                'search_suggestions': _search_suggestions(),
                                },
                               context_instance=RequestContext(request));
@@ -113,7 +58,6 @@ def compliance(request):
     apps = App.objects.all().order_by('acronym').distinct()
     return render_to_response('app/compliance.html',
                               {'apps': apps,
-                               'bootstrap_label': BOOTSTRAP_LABEL,
                                'search_suggestions': _search_suggestions(),
                                },
                               context_instance=RequestContext(request));
@@ -123,7 +67,6 @@ def description(request):
     apps = App.objects.all().order_by('acronym').distinct()
     return render_to_response('app/description.html',
                               {'apps': apps,
-                               'bootstrap_label': BOOTSTRAP_LABEL,
                                'search_suggestions': _search_suggestions(),
                                },
                               context_instance=RequestContext(request));
@@ -133,11 +76,11 @@ def technical(request):
     apps = App.objects.all().order_by('acronym').distinct()
     return render_to_response('app/technical.html',
                               {'apps': apps,
-                               'bootstrap_label': BOOTSTRAP_LABEL,
                                'search_suggestions': _search_suggestions(),
                                },
                               context_instance=RequestContext(request));
 
+# Import/Export CSV
 
 def _mogrify(txt):
     """Transform label names to be pythonic attribute-friendly.
@@ -146,6 +89,10 @@ def _mogrify(txt):
 
 
 def _csv_to_db(csvfile):
+    """Read a CSV file and create App models from row/fields.
+    We are not doing smart things like foreign keys to controlled vocabulary tables,
+    nor converting string values to Integer, Boolean, Date, etc.
+    """
     App.objects.all().delete()      # DANGER: Delete existing apps info
     reader = csv.DictReader(csvfile)
     num_apps = 0
@@ -171,13 +118,11 @@ def _csv_to_db(csvfile):
             logging.warning(msg)
             continue
         app = App()
-        app.save()                  # save for M2M
+        app.save()              # save for M2M
         for k, v in row.items():
             v = v.strip()
             if not v:           # don't store empty values
                 continue
-            # MAYBE TODO: filter nulls from M2M, check nullish
-            # MAYBE TODO: transform Date, Time, Boolean, Integer
             try:
                 setattr(app, _mogrify(k), v)
             except (TypeError, ValidationError), e:
@@ -215,39 +160,49 @@ def uploadcsv(request):
                               {'form': form},
                               context_instance=RequestContext(request));
 
-# def search(request):
-#     """Search common fields for substring match:
-#     acronym, name, description, ...
-#     TODO: We should match what ROSA does, even if it's dumb.
-#     """
-#     if request.method == 'POST':
-#         form = SearchForm(data=request.POST)
-#         if form.is_valid():
-#             text = form.cleaned_data['text']
-#             q = Q(acronym__icontains=text)
-#             q = q | Q(app_name__icontains=text)
-#             q = q | Q(description__icontains=text)
-#             q = q | Q(owner__icontains=text)
-#             q = q | Q(owner_org__icontains=text)
-#             q = q | Q(nasa_off_name__icontains=text)
-#             q = q | Q(nasa_requester__icontains=text)
-#             q = q | Q(manager_app_development__icontains=text)
-#             q = q | Q(manager_project__icontains=text)
-#             q = q | Q(dev_name_primary__icontains=text)
-#             q = q | Q(dev_name_alternate__icontains=text)
-#             apps = Application.objects.filter(q).order_by('acronym', 'release')
-#             return render_to_response('application/search_results.html',
-#                                       {'object_list': apps,
-#                                        'bootstrap_label': BOOTSTRAP_LABEL,
-#                                        'search_suggestions': _search_suggestions(),
-#                                        },
-#                                       context_instance=RequestContext(request));
-#     else:
-#         form = SearchForm()
-#     return render_to_response('application/search.html',
-#                               {'form': form,
-#                                'search_suggestions': _search_suggestions(),
-#                                },
-#                               context_instance=RequestContext(request));
+# Search
 
+class SearchForm(Form):
+    text = CharField(max_length=80, required=True)
 
+def _search_suggestions():      # TODO: memoize this
+    """Provide suggestions to the search box.
+    Takes 0.003 seconds for this query and reduction.
+    TODO: provide this on *every* view since the box is there.
+    How to pull this request from Django template?
+    """
+    now = time.time()
+    words_q = App.objects.values('acronym',
+                                 'name',
+                                 'project_manager_name',
+                                 ).distinct()
+    wordset = set()
+    for worddict in words_q:
+        vals = worddict.values()
+        for val in vals:
+            wordset.add(val)
+    words = [word for word in wordset if word]
+    words.sort()
+    logging.info("search_suggestions len=%d time=%f" % (len(words), time.time() - now))
+    return json.dumps(words)
+
+def search(request):
+    """Search common fields for substring match: acronym, name, project_manager
+    We don't handle GET because our search is a mini-form on most pages.
+    If we get a bad query (e.g., empty) return to where we came from.
+    """
+    if request.method == 'POST':
+        form = SearchForm(data=request.POST)
+        if form.is_valid():
+            text = form.cleaned_data['text']
+            q = Q(acronym__icontains=text)
+            q = q | Q(name__icontains=text)
+            q = q | Q(project_manager_name__icontains=text)
+            apps = App.objects.filter(q).order_by('acronym')
+            return render_to_response('app/search_results.html',
+                                      {'apps': apps,
+                                       'search_suggestions': _search_suggestions(),
+                                       },
+                                      context_instance=RequestContext(request));
+        else:
+            return redirect(request.META['HTTP_REFERER'])

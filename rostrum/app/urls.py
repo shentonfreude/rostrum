@@ -2,7 +2,7 @@ from django.conf.urls.defaults import * #GROSS
 from django.views.generic import list_detail
 
 from models import App
-from views import overview, details, uploadcsv
+from views import overview, details, uploadcsv, search
 from views import administrative, compliance, description, technical
 
 urlpatterns = patterns(
@@ -15,6 +15,7 @@ urlpatterns = patterns(
     url(r'^description/$',              description,    name='app_description'),
     url(r'^technical/$',                technical,      name='app_technical'),
 
-#    url(r'^search/$',             search,             name='search'), # trailing slash needed for post to '.'
+    # prolly should name this app_search?
+    url(r'^search/$',                   search,         name='search'), # trailing slash needed for post to '.'
 )
 
