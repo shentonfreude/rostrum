@@ -1,0 +1,42 @@
+[
+  {
+    "pk": null,	
+    "model": "auth.user", 
+    "fields": {
+      "username": "cshenton", 
+      "first_name": "Chris", 
+      "last_name": "Shenton", 
+      "is_active": true, 
+      "is_superuser": true, 
+      "is_staff": true, 
+      "last_login": "2012-06-24T21:44:42Z", 
+      "groups": [], 
+      "user_permissions": [], 
+      "password": "pbkdf2_sha256$10000$2qKhsdNzUbXA$lUZkPiVj/R3Vly43sIdtLhk04bdGf8893AJ7MDbHFFU=", 
+      "email": "chris.shenton@nasa.gov", 
+      "date_joined": "2012-06-24T21:39:19Z"
+    }
+  }, 
+  {
+    "pk": null,
+    "model": "auth.user", 
+    "fields": {
+      "username": "tyoungha", 
+      "first_name": "Timeka", 
+      "last_name": "Younghall", 
+      "is_active": true, 
+      "is_superuser": false, 
+      "is_staff": true, 
+      "last_login": "2012-06-24T21:45:19Z", 
+      "groups": [], 
+      "user_permissions": [
+        22, 
+        23, 
+        24
+      ], 
+      "password": "pbkdf2_sha256$10000$oyWrjRi9w8zw$8dz6SSnZnXUpOa2uVijOGN1vke329yBQ7SJcMWTgehE=", 
+      "email": "timeka.younghall-1@nasa.gov", 
+      "date_joined": "2012-06-24T21:45:19Z"
+    }
+  }
+]
