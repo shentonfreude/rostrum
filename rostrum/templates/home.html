@@ -18,10 +18,18 @@
 
 <!-- <p>You can use the search box in the upper left of each page to search for applications by acronym, name, and description (more attributes later).</p> -->
 
-<p>Use the menu-bar <a href="{% url app_overview %}"><i class="icon-th-list"></i>
-    Applications</a> button to browse all
-  the applicaitons by acronym, then drill down to a specific one to see
-  all the details for it.</p>
+<p>Use the menu-bar buttons or the links here.  The menubar, like the
+rest of the site's layout is "responsive", automatically resizing and
+stacking information based on screen size.</p>
+
+<p>An auto-completing Search box is available on every page, allowing
+you to quickly find applications by acronym, name, or project
+manager.</p>
+
+
+<p>The <a href="{% url app_overview %}"><i class="icon-th-list"></i>
+    Overview</a> browses all the applications by acronym and allows
+    drilling down to a specific one to see all the details for them.</p>
 
 <p>The
   <a href="{# url app_administrative %}"><i class="icon-th"></i> Administrative</a>,
@@ -33,6 +41,18 @@ views allow you to see details of all apps relevant to these feature categories.
 
 <p>You can load data by exporting ROSA data from a spreadsheet a CSV
 file, then
-  <a href="{# url app_uploadcsv %}"><i class="icon-upload"></i> Uploading</a> the file</a>.
+  <a href="{# url app_uploadcsv %}"><i class="icon-upload"></i>
+  Uploading</a> the file</a>.
+You can also export the data from the app and 
+  <a href="{# url app_downloadcsv %}"><i class="icon-download"></i> Download</a>
+the file as a CSV.</p>
+
+<p>The
+  <a href="{% url admin:app_app_changelist%}"><i class="icon-edit"></i> Edit</a></li>
+feature allows you to change any of the values for any
+application. Coupled with the upload and download, this allows
+"round-tripping" of changes into a spreadsheet.</p>
+
+
 {% endblock %}
 

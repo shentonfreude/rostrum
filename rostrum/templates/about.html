@@ -19,10 +19,19 @@ so the app must be located in contractor or government servers.<p>
 
 <h1>What's New</h1>
 
+<h2>2012-06-24</h2>
+<ul>
+  <li>Download CSV (UTF-8 encoded) for import back into spreadsheet: round-tripping now possible.</li>
+  <li>Upload CSV from within web app itself.</li>
+</ul>
+
 <h2>2012-06-22</h2>
 <ul>
-  <li>Search</li>
-  <li>Edit *_previous fields</li>
+  <li>Manage renamed to Edit and links directly to Apps Admin page insetad of top-level.</li>
+  <li>Admin UI header allows clicking back to main app</li>
+  <li>Search from any page, ignores empty queries</li>
+  <li>Admin UI shows *_previous fields parallel to current values</li>
+  <li>Admin Edit *_previous fields</li>
   <li>Distinguish previous fields from current by columns</li>
   <li>Sort Apps by project manager ajaxily so we can edit during and interview</li>
   <li>Link to Admin Edit App from Details page</li>
@@ -59,12 +68,14 @@ so the app must be located in contractor or government servers.<p>
   <li>Stole much code (except import) from my ROSA implemenation from 2012-04-01</li>
 </ul>
 
-<h1>What's Missing</h1>
+<h1>What's Suboptimal</h1>
 <ul>
-  <li>Export (edited) data as CSV for import by spreadsheet</li>
+  <li>Can't "lock" the header row of tables and scroll data below.</li>
   <li>Details and Technical pages have "Interface *" columns that are
   too wide for apps which list these without spaces: the HTML engine
   can't split the text into multiple lines to fit a cell.</li>
+  <li>After downloading, you're simply left where you invoked the
+  download -- there's no confirmation page or redirect.</li>
 </ul>
 
 {% endblock %}

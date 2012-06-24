@@ -46,17 +46,17 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="#">ROSTRUM</a>
+          <a class="brand" href="{% url home %}"><i class="icon-white icon-home"></i>ROSTRUM</a>
           <div class="nav-collapse">
             <ul class="nav">
-              <li><a href="{% url home                  %}"><i class="icon-white icon-home"></i>        Home</a></li>
-              <li><a href="{% url app_overview          %}"><i class="icon-white icon-th-list"></i>     Applications</a></li>
+              <li><a href="{% url app_overview          %}"><i class="icon-white icon-th-list"></i>     Overview</a></li>
               <li><a href="{% url app_administrative    %}"><i class="icon-white icon-th"></i>          Adminstrative</a></li>
               <li><a href="{% url app_compliance        %}"><i class="icon-white icon-th"></i>          Compliance</a></li>
               <li><a href="{% url app_description       %}"><i class="icon-white icon-th"></i>          Description</a></li>
               <li><a href="{% url app_technical         %}"><i class="icon-white icon-th"></i>          Technical</a></li>
-              <li><a href="{% url app_uploadcsv         %}"><i class="icon-white icon-upload"></i>      Upload CSV</a></li>
-              <li><a href="{% url admin:app_app_changelist %}"><i class="icon-white icon-edit"></i>     Edit Apps</a></li>
+              <li><a href="{% url app_uploadcsv         %}"><i class="icon-white icon-upload"></i>      Upload</a></li>
+              <li><a href="{% url app_downloadcsv       %}"><i class="icon-white icon-download"></i>    Download</a></li>
+              <li><a href="{% url admin:app_app_changelist %}"><i class="icon-white icon-edit"></i>     Edit</a></li>
               <li><a href="{% url about                 %}"><i class="icon-white icon-info-sign"></i>   About</a></li>
             </ul>
             {#<p class="navbar-text pull-right"> <i class="icon-white icon-user"></i>      Logged in as <a href="#">username</a></p>#}
@@ -129,8 +129,8 @@
           <div class="span3">
             <div class="alert-info">
               <ul>
-                <li>NASA Official: <a href="john.galt@nasa.gov">John Galt</a></li>
-                <li>Site Curator: <a href="chris.shenton@nasa.gov">Chris Shenton</a></li>
+                <li>NASA Official: <a href="mailto:john.galt@nasa.example.gov">John Galt</a></li>
+                <li>Site Curator: <a href="mailto:chris.shenton@nasa.gov">Chris Shenton</a></li>
               </ul>
             </div>
           </div>

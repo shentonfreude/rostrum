@@ -2,11 +2,14 @@ import csv
 import json
 import logging
 import time
+import datetime
+from collections import OrderedDict
 
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.forms import Form, CharField, FileField
+from django.http import HttpResponse
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 
@@ -14,6 +17,82 @@ from models import App
 
 logging.basicConfig(level=logging.INFO)
 
+# Spreadsheet-to-DB field map generated from import and _mogrify on imported CSV
+# Capture it here so we can map faster on import, validate field names,
+# and export as CSV with original field names.
+
+MOGRIFIELDS = OrderedDict(
+    [#('No.', 'no'),
+     ('Acronym', 'acronym'),
+     ('Acronym - Previous', 'acronym_previous'),
+     ('Version Number', 'version_number'),
+     ('Version Number - Previous', 'version_number_previous'),
+     ('Name', 'name'),
+     ('Name - Previous', 'name_previous'),
+     ('Description', 'description'),
+     ('Description - Previous', 'description_previous'),
+     ('Support Class', 'support_class'),
+     ('Support Class - Previous', 'support_class_previous'),
+     ('Application Type', 'application_type'),
+     ('Application Type - Previous', 'application_type_previous'),
+     ('Software Class', 'software_class'),
+     ('Software Class - Previous', 'software_class_previous'),
+     ('User Groups', 'user_groups'),
+     ('User Groups - Previous', 'user_groups_previous'),
+     ('Number of Users', 'number_of_users'),
+     ('Number of Users - Previous', 'number_of_users_previous'),
+     ('Version Status', 'version_status'),
+     ('Version Status - Previous', 'version_status_previous'),
+     ('Version Change Description', 'version_change_description'),
+     ('Version Change Description - Previous',
+      'version_change_description_previous'),
+     ('Service Request Numbers', 'service_request_numbers'),
+     ('Service Request Numbers - Previous', 'service_request_numbers_previous'),
+     ('Service Request Class(s)', 'service_request_classs'),
+     ('Service Request Class(s) - Previous', 'service_request_classs_previous'),
+     ('HITSS Supported', 'hitss_supported'),
+     ('HITSS Supported - Previous', 'hitss_supported_previous'),
+     ('Project Manager Name', 'project_manager_name'),
+     ('Project Manager Name - Previous', 'project_manager_name_previous'),
+     ('Data Impact Type', 'data_impact_type'),
+     ('Data Impact Type - Previous', 'data_impact_type_previous'),
+     ('FIPS Information Category', 'fips_information_category'),
+     ('FIPS Information Category - Previous',
+      'fips_information_category_previous'),
+     ('Compliance - 508', 'compliance_508'),
+     ('Compliance - 508 - Previous', 'compliance_508_previous'),
+     ('Internal or External System', 'internal_or_external_system'),
+     ('Internal or External System - Previous',
+      'internal_or_external_system_previous'),
+     ('Security Plan Number', 'security_plan_number'),
+     ('Security Plan Number - Previous', 'security_plan_number_previous'),
+     ('URL Link', 'url_link'),
+     ('URL Link - Previous', 'url_link_previous'),
+     ('Architecture Type', 'architecture_type'),
+     ('Architecture Type - Previous', 'architecture_type_previous'),
+     ('DBMS Names and Version', 'dbms_names_and_version'),
+     ('DBMS Names and Version - Previous', 'dbms_names_and_version_previous'),
+     ('Software Names and Versions', 'software_names_and_versions'),
+     ('Software Names and Versions - Previous',
+      'software_names_and_versions_previous'),
+     ('Servers - Application', 'servers_application'),
+     ('Servers - Application - Previous', 'servers_application_previous'),
+     ('Servers - Database', 'servers_database'),
+     ('Servers - Database - Previous', 'servers_database_previous'),
+     ('Servers - Report', 'servers_report'),
+     ('Servers - Report - Previous', 'servers_report_previous'),
+     ('Servers Location', 'servers_location'),
+     ('Servers Location - Previous', 'servers_location_previous'),
+     ('Network Services Used', 'network_services_used'),
+     ('Network Services Used - Previous', 'network_services_used_previous'),
+     ('Interface Acronym', 'interface_acronym'),
+     ('Interface Acronym - Previous', 'interface_acronym_previous'),
+     ('Interface Direction', 'interface_direction'),
+     ('Interface Direction - Previous', 'interface_direction_previous'),
+     ('Interface Method', 'interface_method'),
+     ('Interface Method - Previous', 'interface_method_previous'),
+     ('Comments', 'comments'),
+     ])
 
 def overview(request, acronym=None):
     """List of all apps and a few attributes, allowing drill-down.
@@ -90,14 +169,21 @@ def _mogrify(txt):
 
 def _csv_to_db(csvfile):
     """Read a CSV file and create App models from row/fields.
+    Store empty values as '' to avoid storing None which renders
+    ugly in template and cannot be unicoded on export.
     We are not doing smart things like foreign keys to controlled vocabulary tables,
     nor converting string values to Integer, Boolean, Date, etc.
     """
-    App.objects.all().delete()      # DANGER: Delete existing apps info
-    reader = csv.DictReader(csvfile)
     num_apps = 0
     warnings = []
     infos = []
+    App.objects.all().delete()      # DANGER: Delete existing apps info
+    reader = csv.DictReader(csvfile)
+    for field in reader.fieldnames:
+        if field not in MOGRIFIELDS.keys():
+            msg = "Ignoring unrecognized field name '%s' for all rows in CSV" % field
+            warnings.append(msg)
+            logging.warning(msg)
     for rid, row in enumerate(reader):
         acronym = row['Acronym'].strip()
         version = row['Version Number'].strip()
@@ -120,11 +206,11 @@ def _csv_to_db(csvfile):
         app = App()
         app.save()              # save for M2M
         for k, v in row.items():
+            if k not in MOGRIFIELDS.keys():
+                continue        # ignore unrecognized field names 
             v = v.strip()
-            if not v:           # don't store empty values
-                continue
             try:
-                setattr(app, _mogrify(k), v)
+                setattr(app, MOGRIFIELDS[k], v)
             except (TypeError, ValidationError), e:
                 logging.error("SETATTR: %s", e)
                 import pdb; pdb.set_trace()
@@ -146,19 +232,41 @@ def uploadcsv(request):
     """Upload a CSV file exported from spreadsheet, parse into DB.
     """
     if request.method == 'POST':
+        logging.info("UPLOAD encoding=%s" % request.encoding)
         form = UploadCsvForm(request.POST, request.FILES)
         if form.is_valid():
             res = _csv_to_db(request.FILES['file'])
             return render_to_response('app/uploadcsv.html',
                                       {'warnings': res['warnings'],
                                        'infos': res['infos'],
+                                       'search_suggestions': _search_suggestions(),
                                        },
                                       context_instance=RequestContext(request));
     else:
         form = UploadCsvForm()
     return render_to_response('app/uploadcsv.html',
-                              {'form': form},
+                              {'form': form,
+                               'search_suggestions': _search_suggestions(),
+                               },
                               context_instance=RequestContext(request));
+
+def downloadcsv(request):
+    """Create a CSV file and download it.
+    Avoid creating a file in memory.
+    """
+    logging.info("dialects: %s" % csv.list_dialects())
+    # TODO: what encoding? utf-8 seems likely
+    fname = "rostrum-%s" % datetime.datetime.now().isoformat()[:19]
+    response = HttpResponse(mimetype='text/csv; charset=utf-8')
+    response['Content-Disposition'] = 'attachment; filename="%s"' % fname
+    writer = csv.writer(response)
+    writer.writerow(MOGRIFIELDS.keys()) # first row is original headers and order
+    apps = App.objects.all()
+    for app in apps:
+        row = [getattr(app, v, u'').encode("utf-8") for v in MOGRIFIELDS.values()] # put fields in original order
+        writer.writerow(row)
+    return response
+
 
 # Search
 
