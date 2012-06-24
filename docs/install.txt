@@ -2,50 +2,69 @@
  Install
 =========
 
-Virtual env::
+Install Python-2.7, VirtualEnv, PIP
+===================================
+
+You'll need to install these if you don't have them::
+
+  curl -O http://python.org/ftp/python/2.7.3/Python-2.7.3.tgz
+  tar zxf Python-2.7.3.tgz
+  cd Python-2.7.3
+  ./configure --prefix=/usr/local/python/2.7
+  make
+  sudo make install
+
+  curl -O http://python-distribute.org/distribute_setup.py
+  sudo /usr/local/python/2.7/bin/python distribute_setup.py
+
+  sudo /usr/local/python/2.7/bin/easy_install virtualenv
+  sudo /usr/local/python/2.7/bin/easy_install pip
+
+Invoke VirtualEnv and Build
+===========================
+
+Presumably you've already checked out the code from github and it
+created a directory, and you've changed into it.
 
   /usr/local/python/2.7/bin/virtualenv --no-site-packages --distribute .
   source bin/activate
 
 Software requirements::
 
-  pip install -r requirements.txt 
+  pip install -r requirements.txt
 
-Create new Django Project and App::
 
-  bin/django-admin.py startproject rostrum
+Initialize the App DB
+=====================
+
+Create the DB structure schema from the model::
 
   cd rostrum
-  bin/django-admin.py startapp app
-
-  cd rostrum
-
-Fix Perms::
-
-  chmod a+x manage.py
-
-Run empty app::
-
-  ./manage.py runserver
-
-
-
-Initialize DB from Models::
-
-           cd /Users/cshenton/Projects/core/rostrum
-rostrum/manage.py syncdb
   ./manage.py syncdb
 
+If it complains::
 
-TODO
-====
-
-I have too many levels of rostrum, and so the DB dir has to be pushed down.
-
-Django can't create passwd from Emacs::
-
-  File "/Users/cshenton/Projects/core/rostrum/lib/python2.7/site-packages/django/contrib/auth/management/__init__.py", line 85, in get_system_username
-      return getpass.getuser().decode(locale.getdefaultlocale()[1])
   TypeError: decode() argument 1 must be string, not None
 
-so use a terminal.
+then remove the partially-created DB and use this longer form to
+specify the locale::
+
+  rm db/rostrum.sqlite3
+  LANG=en_US.UTF-8 ./manage.py syncdb
+
+Give it your info and create a Django admin account.
+
+Run the app with the empty DB, listening on all public addresses::
+
+  ./manage.py runserver 0.0.0.0:8080
+
+If you want to run it in this development mode and disconnect, tell it
+to ignore hangup::
+
+  nohup ./manage.py runserver 0.0.0.0:8080
+
+and any output will be saved to file 'nohup.out'.
+
+
+Now you can use the Upload feature to import a CSV from the ROSA/STRAW
+spreadsheet.
