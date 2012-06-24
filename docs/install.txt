@@ -59,9 +59,9 @@ Run the app with the empty DB, listening on all public addresses::
   ./manage.py runserver 0.0.0.0:8080
 
 If you want to run it in this development mode and disconnect, tell it
-to ignore hangup::
+to run in the background and ignore hangup::
 
-  nohup ./manage.py runserver 0.0.0.0:8080
+  nohup ./manage.py runserver 0.0.0.0:8080 &
 
 and any output will be saved to file 'nohup.out'.
 
