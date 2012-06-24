@@ -7,6 +7,7 @@ from collections import OrderedDict
 
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.forms import Form, CharField, FileField
 from django.http import HttpResponse
@@ -228,6 +229,7 @@ def _csv_to_db(csvfile):
 class UploadCsvForm(Form):
     file = FileField()
 
+@login_required()
 def uploadcsv(request):
     """Upload a CSV file exported from spreadsheet, parse into DB.
     """

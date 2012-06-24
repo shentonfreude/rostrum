@@ -27,10 +27,8 @@ will be erased before loading in the new data.</p>
       id="uploadcsv"
       class="well form-horizontal">
   {% csrf_token %}
-  <table>
-  {# form.as_p #} <!-- also: as_table, as_p, as_ul -->
-  {{ form|bootstrap }}
-  </table>
+  {{ form.as_p }} <!-- also: as_table, as_p, as_ul -->
+  {# form|bootstrap #}
   </br>
   <button type="submit" class="btn btn-primary">
     <i class="icon-upload icon-white"></i>
@@ -39,16 +37,14 @@ will be erased before loading in the new data.</p>
 
 {% else %}
 
-<h2>Upload Results</h2>
-
-<h3>Warnings</h3>
+<h2>Warnings</h2>
 <ul>
   {% for warning in warnings %}
   <li>{{warning}}</li>
   {% endfor %}
 </ul>
 
-<h3>Info</h3>
+<h2>Info</h2>
 <ul>
   {% for info in infos %}
   <li>{{info}}</li>
